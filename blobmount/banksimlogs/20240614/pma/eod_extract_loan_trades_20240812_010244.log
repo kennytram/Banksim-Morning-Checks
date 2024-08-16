@@ -1,0 +1,11 @@
+2024-08-12 01:02:44 INFO Log file initialized.
+2024-08-12 01:02:44 INFO Starting to extract loan trades...
+2024-08-12 01:02:44 INFO Extracting data query: 
+            SELECT TradeId, ClientCode AS ClientId, FacilityType, FacilityStartDate, FacilityMaturityDate, SNCRating, GrossAmount, NetAmount, UsedAmount, TradeDate AS Timestamp
+            FROM PoseManagement.LoanTrades
+            WHERE TradeDate <= :extract_date
+        .
+2024-08-12 01:02:44 INFO Connected to database successfully.
+2024-08-12 01:02:44 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7652be5ccca0>
+2024-08-12 01:02:44 INFO Data written to CSV file data/output/backoffice_loans_20240614.csv
+2024-08-12 01:02:44 INFO Finished extracting loan trades.

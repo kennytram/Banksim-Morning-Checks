@@ -1,0 +1,2 @@
+ClientTradeId,ClientCode,Nominal,Currency,CollatType,StartDate,MaturityDate,TradeDate,TradeTime,Quantity,Instrument_Code,Price,SecurityType,Fee,Way,Trader
+906507,GYTR07,297685068,USD,EQT,20240303,20241202,20240613,08:48:59,1779030,AMZN,184.28,stock,0.03,B,mthomas4718

@@ -1,0 +1,18 @@
+2024-08-12 00:56:34 INFO Log file initialized.
+2024-08-12 00:56:34 INFO Starting to generate risk dataset...
+2024-08-12 00:56:34 INFO Executing stored procedure: sp_risk_rating_moves
+2024-08-12 00:56:34 INFO Connected to database successfully.
+2024-08-12 00:56:34 INFO Stored procedure 'creditriskdb.sp_risk_rating_moves' executed successfully.
+2024-08-12 00:56:34 INFO Executing stored procedure: sp_risk_computation_overshoot
+2024-08-12 00:56:34 INFO Connected to database successfully.
+2024-08-12 00:56:34 INFO Stored procedure 'creditriskdb.sp_risk_computation_overshoot' executed successfully.
+2024-08-12 00:56:34 INFO Executing stored procedure: sp_risk_dataset_generation
+2024-08-12 00:56:34 INFO Connected to database successfully.
+2024-08-12 00:56:34 INFO Stored procedure 'creditriskdb.sp_risk_dataset_generation' executed successfully.
+2024-08-12 00:56:34 INFO Extracting data query: 
+            SELECT * FROM creditriskdb.Dataset
+        .
+2024-08-12 00:56:34 INFO Connected to database successfully.
+2024-08-12 00:56:34 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x75cb3b5cab00>
+2024-08-12 00:56:35 INFO Data successfully written to data/output/risk_dataset.xls
+2024-08-12 00:56:35 INFO Finished generate risk dataset.

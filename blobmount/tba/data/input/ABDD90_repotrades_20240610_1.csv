@@ -1,0 +1,2 @@
+ClientTradeId,ClientCode,Nominal,Currency,CollatType,StartDate,MaturityDate,TradeDate,TradeTime,Quantity,Instrument_Code,Price,SecurityType,Fee,Way,Trader
+833434,ABDD90,200000000,USD,EQT,20221103,20221105,20240610,08:15:32,985174,NVDA,122.3,stock,0.03,B,mthomas4718

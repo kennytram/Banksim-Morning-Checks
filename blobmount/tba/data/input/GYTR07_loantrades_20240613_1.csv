@@ -1,0 +1,2 @@
+TradeDate,TradeTime,ClientTradeId,ClientCode,FacilityType,FacilityStartDate,FacilityMaturityDate,SNCRating,GrossAmount,NetAmount,UsedAmount,Currency
+20240613,09:45:23,3940857,GYTR07,Revolver,2023-09-17,2025-02-15,SM,21081461,12297632,9350599,USD

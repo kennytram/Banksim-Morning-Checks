@@ -1,0 +1,11 @@
+2024-08-12 00:17:54 INFO Log file initialized.
+2024-08-12 00:17:54 INFO Starting EOD repo trade report generation...
+2024-08-12 00:17:54 INFO Extracting data query: 
+            SELECT TradeDate, TradeTime, ClientTradeId, ClientCode, Nominal, Currency, CollatType, Instrument_Code, Price, Quantity, Fee, StartDate, MaturityDate
+            FROM TradeBooking.RepoTrades
+            WHERE TradeDate = :extract_date
+        .
+2024-08-12 00:17:54 INFO Connected to database successfully.
+2024-08-12 00:17:55 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7fe1da4a8f40>
+2024-08-12 00:17:55 INFO Data written to CSV file data/output/eod_repo_trades_20240610.csv
+2024-08-12 00:17:55 INFO EOD repo trade report generation completed

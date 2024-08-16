@@ -1,0 +1,27 @@
+2024-08-12 01:00:28 INFO Log file initialized.
+2024-08-12 01:00:28 INFO Parsed client code: JZPQ10, trade type: loantrades, trade date: 20240614, file_number: 1.
+2024-08-12 01:00:28 INFO Starting trade processing.
+2024-08-12 01:00:28 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.AuthorizedClients
+        WHERE ClientCode = :client_code
+        AND KYC_Status = 'Y'
+        AND RISK_Status = 'Y'
+        .
+2024-08-12 01:00:29 INFO Connected to database successfully.
+2024-08-12 01:00:29 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x78e224494f40>
+2024-08-12 01:00:29 INFO    Count
+0      1
+2024-08-12 01:00:29 INFO Starting LoanTrades Sanity Checks...
+2024-08-12 01:00:29 INFO   TradeDate TradeTime  ClientTradeId  ... NetAmount UsedAmount Currency
+0  20240614  11:59:50        7145422  ...  13470603    6446618      USD
+1  20240614  12:41:58        9092160  ...  23422794    8788270      USD
+2  20240614  13:13:24        7269992  ...   8800124    1042605      USD
+
+[3 rows x 12 columns]
+2024-08-12 01:00:29 INFO Insert data into the database
+2024-08-12 01:00:29 INFO Loading data into LoanTrades...
+2024-08-12 01:00:29 INFO Connected to database successfully.
+2024-08-12 01:00:29 INFO data.sql: 3
+2024-08-12 01:00:29 INFO Data loaded successfully into LoanTrades.
+2024-08-12 01:00:29 INFO Finished loading trades.

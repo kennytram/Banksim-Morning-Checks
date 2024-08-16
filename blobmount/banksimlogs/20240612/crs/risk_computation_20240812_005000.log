@@ -1,0 +1,15 @@
+2024-08-12 00:50:00 INFO Log file initialized.
+2024-08-12 00:50:00 INFO Starting to compute risk...
+2024-08-12 00:50:00 INFO Executing stored procedure: sp_risk_computation_loan
+2024-08-12 00:50:00 INFO Connected to database successfully.
+2024-08-12 00:50:00 INFO Stored procedure 'creditriskdb.sp_risk_computation_loan' executed successfully.
+2024-08-12 00:50:00 INFO Executing stored procedure: sp_risk_computation_repo
+2024-08-12 00:50:00 INFO Connected to database successfully.
+2024-08-12 00:50:00 INFO Stored procedure 'creditriskdb.sp_risk_computation_repo' executed successfully.
+2024-08-12 00:50:00 INFO Executing stored procedure: sp_risk_computation_bucketing_repo
+2024-08-12 00:50:00 INFO Connected to database successfully.
+2024-08-12 00:50:00 INFO Stored procedure 'creditriskdb.sp_risk_computation_bucketing_repo' executed successfully.
+2024-08-12 00:50:00 INFO Executing stored procedure: sp_risk_computation_bucketing_loan
+2024-08-12 00:50:00 INFO Connected to database successfully.
+2024-08-12 00:50:01 INFO Stored procedure 'creditriskdb.sp_risk_computation_bucketing_loan' executed successfully.
+2024-08-12 00:50:01 INFO Finished computing risk.

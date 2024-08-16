@@ -1,0 +1,41 @@
+2024-08-12 00:40:42 INFO Log file initialized.
+2024-08-12 00:40:42 INFO Parsed client code: ABBD91, trade type: trades, trade date: 20240611, file_number: 1.
+2024-08-12 00:40:42 INFO Starting trade processing.
+2024-08-12 00:40:42 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.AuthorizedClients
+        WHERE ClientCode = :client_code
+        AND KYC_Status = 'Y'
+        AND RISK_Status = 'Y'
+        .
+2024-08-12 00:40:42 INFO Connected to database successfully.
+2024-08-12 00:40:48 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7c439a2c4ee0>
+2024-08-12 00:40:48 INFO    Count
+0      1
+2024-08-12 00:40:48 INFO Starting Trades Sanity Checks...
+2024-08-12 00:40:48 INFO    TradeDate TradeTime ClientCode  ...  SecurityType Currency  Exchange
+0   20240611   6:16:55     ABBD91  ...         stock      USD    NASDAQ
+1   20240611  13:30:54     ABBD91  ...         stock      USD    NASDAQ
+2   20240611   7:27:32     ABBD91  ...         stock      USD    NASDAQ
+3   20240611  10:16:11     ABBD91  ...         stock      USD    NASDAQ
+4   20240611  15:12:45     ABBD91  ...         stock      USD    NASDAQ
+5   20240611  13:45:43     ABBD91  ...         stock      USD      NYSE
+6   20240611  15:49:11     ABBD91  ...         stock      USD    NASDAQ
+7   20240611   7:41:04     ABBD91  ...         stock      USD    NASDAQ
+8   20240611   6:53:23     ABBD91  ...         stock      USD    NASDAQ
+9   20240611   7:54:32     ABBD91  ...         stock      USD      NYSE
+10  20240611   8:36:17     ABBD91  ...         stock      USD    NASDAQ
+11  20240611   6:33:58     ABBD91  ...         stock      USD    NASDAQ
+12  20240611  12:03:25     ABBD91  ...         stock      USD    NASDAQ
+13  20240611  10:12:18     ABBD91  ...         stock      USD    NASDAQ
+14  20240611   8:25:34     ABBD91  ...         stock      USD    NASDAQ
+15  20240611   6:21:01     ABBD91  ...         stock      USD    NASDAQ
+
+[16 rows x 13 columns]
+2024-08-12 00:40:48 INFO End of Trades Sanity Checks...
+2024-08-12 00:40:48 INFO Insert data into the database
+2024-08-12 00:40:48 INFO Loading data into Trades...
+2024-08-12 00:40:48 INFO Connected to database successfully.
+2024-08-12 00:40:48 INFO data.sql: 16
+2024-08-12 00:40:48 INFO Data loaded successfully into Trades.
+2024-08-12 00:40:48 INFO Finished loading trades.

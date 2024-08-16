@@ -1,0 +1,2 @@
+TradeDate,TradeTime,ClientTradeId,ClientCode,FacilityType,FacilityStartDate,FacilityMaturityDate,SNCRating,GrossAmount,NetAmount,UsedAmount,Currency
+20240613,13:59:45,7053521,IYQR09,TermLoan,2023-08-26,2025-02-26,P,17611062,9384047,3507085,USD

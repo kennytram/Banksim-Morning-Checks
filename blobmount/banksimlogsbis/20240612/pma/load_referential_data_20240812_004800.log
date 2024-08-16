@@ -1,0 +1,80 @@
+2024-08-12 00:48:00 INFO Log file initialized.
+2024-08-12 00:48:00 INFO Starting to load referential data...
+2024-08-12 00:48:00 INFO Preparing to read file Clients_{date}.csv with date 20240612
+2024-08-12 00:48:00 INFO Data read from data/input/Clients_20240612.csv and ready to load in table Client:    ClientCode                      Name  ...         PCRU      RiskCell
+0      APPC12       Petroleus Venezuela  ...  GIS/CIB/NRG  RISK/CIB/NRG
+1      ADKC09                      AT&T  ...  GIS/CIB/COR  RISK/CIB/COR
+2      ABDD99                    ROGERS  ...  GIS/CIB/COR  RISK/CIB/COR
+3      ABCS12               TIM HORTONS  ...  GIS/CIB/COR  RISK/CIB/COR
+4      ABDD90         OPSCO Bank Canada  ...   GIS/FIN/CA   RISK/FIN/CA
+5      ABBD91             OPSCO Bank US  ...   GIS/FIN/US   RISK/FIN/US
+6      ADDL87          Bank of Montreal  ...   GIS/FIN/CA   RISK/FIN/CA
+7      ADDE98    UNIVERSITY OF COLUMBIA  ...   GIS/FIN/US   RISK/FIN/US
+8      ACVD53         Coca Cola Company  ...  GIS/CIB/COR  RISK/CIB/COR
+9      ACDT32         STATE STREET BANK  ...   GIS/FIN/US   RISK/FIN/US
+10     ACDR21                 Blackrock  ...   GIS/FIN/US   RISK/FIN/US
+11     ADVF33  UNIVERSITY OF LOUISVILLE  ...   GIS/FIN/US   RISK/FIN/US
+12     ADFF22                      WHO   ...  GIS/CIB/OTH  RISK/CIB/OTH
+13     ADCC12          TESLA INDUSTRIES  ...  GIS/CIB/NRG  RISK/CIB/NRG
+14     AWXZ01                 Microsoft  ...  GIS/CIB/COR  RISK/CIB/COR
+15     BYWX02                Apple Inc.  ...  GIS/CIB/COR  RISK/CIB/COR
+16     CYZX03             Goldman Sachs  ...   GIS/FIN/US   RISK/FIN/US
+17     DZVU04                    Amazon  ...  GIS/CIB/COR  RISK/CIB/COR
+18     EYVT05        Ford Motor Company  ...  GIS/CIB/COR  RISK/CIB/COR
+
+[19 rows x 10 columns]
+2024-08-12 00:48:00 INFO Connected to database successfully.
+2024-08-12 00:48:00 INFO Truncate table PoseManagement.Client attempt
+2024-08-12 00:48:01 INFO Truncate table successfully PoseManagement.Client.
+2024-08-12 00:48:01 INFO Loading data into Client...
+2024-08-12 00:48:01 INFO Connected to database successfully.
+2024-08-12 00:48:01 INFO data.sql: 19
+2024-08-12 00:48:01 INFO Data loaded successfully into Client.
+2024-08-12 00:48:01 INFO Preparing to read file Client_PTF_{date}.csv with date 20240612
+2024-08-12 00:48:01 INFO Data read from data/input/Client_PTF_20240612.csv and ready to load in table ClientPTF:    ClientId  CodPTF ProductType
+0    APPC12  SEG12G          RP
+1    ADKC09  MRP32F          RP
+2    ABDD99  DKF09K          RP
+3    ABCS12  ARQ09F          RP
+4    ABDD90  QRE79P          RP
+5    ABBD91  LKT43Q          RP
+6    ADDL87  JHD67R          RP
+7    ADDE98  FGN89S          RP
+8    ACVD53  BVC56T          RP
+9    ACDT32  OPQ87U          RP
+10   ACDR21  WEW45F          RP
+11   ADVF33  BOO54A          RP
+12   ADFF22  FDF39X          RP
+13   ADCC12  VCS67U          RP
+14   APPC12  QRS89D         LOA
+15   ADKC09  UVW91E         LOA
+16   ABDD99  JKL23F         LOA
+17   ABCS12  ABC56G         LOA
+18   ABDD90  DEF98H         LOA
+19   ABBD91  GHI12I         LOA
+20   ADDL87  MNO34J         LOA
+21   ADDE98  STU67K         LOA
+22   ACVD53  VWX09L         LOA
+23   ACDT32  YZA76M         LOA
+24   ACDR21  BCD54N         LOA
+25   ADVF33  CDE32O         LOA
+26   ADFF22  EFG21P         LOA
+27   ADCC12  GHI43Q         LOA
+28   AWXZ01  XEO01P          RP
+29   BYWX02  BOD22Q          RP
+30   CYZX03  IOS88R          RP
+31   DZVU04  CGB57O          RP
+32   EYVT05  QFH62X          RP
+33   AWXZ01  PAM97A         LOA
+34   BYWX02  VFX11U         LOA
+35   CYZX03  TLT86P         LOA
+36   DZVU04  RMT77Y         LOA
+37   EYVT05  AJY25N         LOA
+2024-08-12 00:48:01 INFO Connected to database successfully.
+2024-08-12 00:48:01 INFO Truncate table PoseManagement.ClientPTF attempt
+2024-08-12 00:48:01 INFO Truncate table successfully PoseManagement.ClientPTF.
+2024-08-12 00:48:01 INFO Loading data into ClientPTF...
+2024-08-12 00:48:01 INFO Connected to database successfully.
+2024-08-12 00:48:01 INFO data.sql: 38
+2024-08-12 00:48:01 INFO Data loaded successfully into ClientPTF.
+2024-08-12 00:48:01 INFO Finished loading referential data.

@@ -1,0 +1,2 @@
+ClientTradeId,ClientCode,Nominal,Currency,CollatType,StartDate,MaturityDate,TradeDate,TradeTime,Quantity,Instrument_Code,Price,SecurityType,Fee,Way,Trader
+988165,IYQR09,391668151,CAD,CSH,20230902,20250308,20240614,08:35:48,391668151,,1.37651,,0.03,B,mthomas4718

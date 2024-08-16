@@ -1,0 +1,2 @@
+ClientTradeId,ClientCode,Nominal,Currency,CollatType,StartDate,MaturityDate,TradeDate,TradeTime,Quantity,Instrument_Code,Price,SecurityType,Fee,Way,Trader
+835910,FZUS06,196397764,USD,EQT,20240216,20241022,20240611,08:19:23,15061178,F,187.23,stock,0.03,B,mthomas4718

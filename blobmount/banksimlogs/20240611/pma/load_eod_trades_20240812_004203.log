@@ -1,0 +1,57 @@
+2024-08-12 00:42:03 INFO Log file initialized.
+2024-08-12 00:42:03 INFO Starting to load trade data...
+2024-08-12 00:42:03 INFO Preparing to read file eod_trades_{date}.csv with date 20240611
+2024-08-12 00:42:03 INFO Data read from data/input/eod_trades_20240611.csv and ready to load in table Trades:       TradeDate TradeTime ClientCode  ...  Way   Trader SecurityType
+0    2024-06-11  15:02:19     ADDE98  ...    S  trader1          NaN
+1    2024-06-11  08:30:07     ADDE98  ...    S  trader3          NaN
+2    2024-06-11  08:51:58     ADDE98  ...    S  trader3          NaN
+3    2024-06-11  07:03:17     ADDE98  ...    S  trader2          NaN
+4    2024-06-11  08:29:43     ADDE98  ...    B  trader1          NaN
+..          ...       ...        ...  ...  ...      ...          ...
+472  2024-06-11  11:13:31     ADDL87  ...    B  trader2          NaN
+473  2024-06-11  10:03:13     ADDL87  ...    B  trader2          NaN
+474  2024-06-11  13:47:45     ADDL87  ...    B  trader2          NaN
+475  2024-06-11  11:21:15     ADDL87  ...    B  trader3          NaN
+476  2024-06-11  08:40:03     ADDL87  ...    S  trader2          NaN
+
+[477 rows x 13 columns]
+2024-08-12 00:42:03 INFO Loading data into Trades...
+2024-08-12 00:42:03 INFO Connected to database successfully.
+2024-08-12 00:42:04 INFO data.sql: 155
+2024-08-12 00:42:04 INFO Data loaded successfully into Trades.
+2024-08-12 00:42:04 INFO Preparing to read file eod_repo_trades_{date}.csv with date 20240611
+2024-08-12 00:42:04 INFO Data read from data/input/eod_repo_trades_20240611.csv and ready to load in table RepoTrades:      TradeDate TradeTime  ClientTradeId  ...   Fee   StartDate MaturityDate
+0   2024-06-11  08:19:23         835910  ...  0.03  2024-02-16   2024-10-22
+1   2024-06-11  09:05:45         277590  ...  0.03  2023-12-05   2025-01-28
+2   2024-06-11  10:47:21         971224  ...  0.03  2023-06-08   2024-12-17
+3   2024-06-11  11:29:13         651585  ...  0.03  2024-05-06   2025-03-17
+4   2024-06-11  09:11:47         397719  ...  0.03  2023-12-21   2024-07-20
+5   2024-06-11  10:23:36         854559  ...  0.03  2024-02-01   2025-04-22
+6   2024-06-11  08:59:02         143380  ...  0.03  2024-03-27   2025-02-20
+7   2024-06-11  09:43:18         155759  ...  0.03  2023-10-25   2024-09-21
+8   2024-06-11  08:26:34         630506  ...  0.03  2023-08-13   2025-01-04
+9   2024-06-11  09:31:58         276532  ...  0.03  2024-02-19   2025-05-06
+10  2024-06-11  08:45:12         908132  ...  0.03  2023-10-12   2025-01-24
+
+[11 rows x 13 columns]
+2024-08-12 00:42:04 INFO Loading data into RepoTrades...
+2024-08-12 00:42:04 INFO Connected to database successfully.
+2024-08-12 00:42:04 INFO data.sql: 11
+2024-08-12 00:42:04 INFO Data loaded successfully into RepoTrades.
+2024-08-12 00:42:04 INFO Preparing to read file eod_loan_trades_{date}.csv with date 20240611
+2024-08-12 00:42:04 INFO Data read from data/input/eod_loan_trades_20240611.csv and ready to load in table LoanTrades:     TradeDate TradeTime  ClientTradeId  ... GrossAmount   NetAmount  UsedAmount
+0  2024-06-11  08:59:47        6724285  ...  37838223.0  21424778.0    741456.0
+1  2024-06-11  07:16:18        9044310  ...  26408871.0   6765625.0   2740000.0
+2  2024-06-11  07:34:18        2829941  ...   7330144.0   7219510.0   2406675.0
+3  2024-06-11  10:21:05        4202570  ...   9756446.0   5566978.0   5562271.0
+4  2024-06-11  09:34:22        5128081  ...  47293111.0   4099901.0    991925.0
+5  2024-06-11  09:36:48        5304813  ...  47190085.0  31410407.0  14925754.0
+6  2024-06-11  09:39:23        2407529  ...  39729037.0  39039634.0  23486640.0
+7  2024-06-11  06:53:28        9979319  ...   4923629.0   2814900.0   2388806.0
+
+[8 rows x 11 columns]
+2024-08-12 00:42:04 INFO Loading data into LoanTrades...
+2024-08-12 00:42:04 INFO Connected to database successfully.
+2024-08-12 00:42:04 INFO data.sql: 8
+2024-08-12 00:42:04 INFO Data loaded successfully into LoanTrades.
+2024-08-12 00:42:04 INFO Finished loading trade data.

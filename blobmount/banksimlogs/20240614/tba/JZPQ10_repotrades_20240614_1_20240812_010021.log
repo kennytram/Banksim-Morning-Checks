@@ -1,0 +1,28 @@
+2024-08-12 01:00:21 INFO Log file initialized.
+2024-08-12 01:00:21 INFO Parsed client code: JZPQ10, trade type: repotrades, trade date: 20240614, file_number: 1.
+2024-08-12 01:00:21 INFO Starting trade processing.
+2024-08-12 01:00:21 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.AuthorizedClients
+        WHERE ClientCode = :client_code
+        AND KYC_Status = 'Y'
+        AND RISK_Status = 'Y'
+        .
+2024-08-12 01:00:21 INFO Connected to database successfully.
+2024-08-12 01:00:21 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x78380814cfa0>
+2024-08-12 01:00:21 INFO    Count
+0      1
+2024-08-12 01:00:21 INFO Starting Trades_repo Sanity Checks...
+2024-08-12 01:00:21 INFO    ClientTradeId ClientCode    Nominal  ...   Fee Way       Trader
+0         551885     JZPQ10  149442995  ...  0.03   B  mthomas4718
+1         854495     JZPQ10  262494413  ...  0.03   B  mthomas4718
+2          74371     JZPQ10  278070772  ...  0.03   B  mthomas4718
+
+[3 rows x 16 columns]
+2024-08-12 01:00:21 INFO End of Trades_repo Sanity Checks...
+2024-08-12 01:00:21 INFO Insert data into the database
+2024-08-12 01:00:21 INFO Loading data into RepoTrades...
+2024-08-12 01:00:21 INFO Connected to database successfully.
+2024-08-12 01:00:21 INFO data.sql: 3
+2024-08-12 01:00:21 INFO Data loaded successfully into RepoTrades.
+2024-08-12 01:00:21 INFO Finished loading trades.

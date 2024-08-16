@@ -1,0 +1,2 @@
+TradeDate,TradeTime,ClientTradeId,ClientCode,FacilityType,FacilityStartDate,FacilityMaturityDate,SNCRating,GrossAmount,NetAmount,UsedAmount,Currency
+20240610,06:34:21,9879643,ABCS12,Revolver,2022-10-23,2023-10-27,P,3000000,300000,2333,USD

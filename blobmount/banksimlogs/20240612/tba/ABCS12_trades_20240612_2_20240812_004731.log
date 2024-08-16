@@ -1,0 +1,142 @@
+2024-08-12 00:47:31 INFO Log file initialized.
+2024-08-12 00:47:31 INFO Parsed client code: ABCS12, trade type: trades, trade date: 20240612, file_number: 2.
+2024-08-12 00:47:31 INFO Starting trade processing.
+2024-08-12 00:47:31 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.AuthorizedClients
+        WHERE ClientCode = :client_code
+        AND KYC_Status = 'Y'
+        AND RISK_Status = 'Y'
+        .
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d97a4a1c0>
+2024-08-12 00:47:31 INFO    Count
+0      1
+2024-08-12 00:47:31 INFO Starting Trades Sanity Checks...
+2024-08-12 00:47:31 INFO    TradeDate TradeTime ClientCode  ...  SecurityType Currency  Exchange
+0   20240612  13:40:42     ABCS12  ...         stock      USD    NASDAQ
+1   20240612  10:13:40     ABCS12  ...         stock      USD      NYSE
+2   20240612  11:45:16     ABCS12  ...         stock      USD    NASDAQ
+3   20240612  14:25:16     ABCS12  ...         stock      USD    NASDAQ
+4   20240612   8:29:58     ABCS12  ...         stock      USD    NASDAQ
+5   20240612  13:12:30     ABCS12  ...         stock      USD      NYSE
+6   20240612  10:56:45     ABCS12  ...         stock      USD    NASDAQ
+7   20240612   6:37:45     ABCS12  ...         stock      USD    NASDAQ
+8   20240612   8:47:54     ABCS12  ...         stock      USD    NASDAQ
+9   20240612   8:46:56     ABCS12  ...         stock      USD    NASDAQ
+10  20240612  10:01:43     ABCS12  ...         stock      USD    NASDAQ
+
+[11 rows x 13 columns]
+2024-08-12 00:47:31 INFO End of Trades Sanity Checks...
+2024-08-12 00:47:31 INFO Insert data into the database
+2024-08-12 00:47:31 INFO Loading data into Trades...
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d9731ca00>
+2024-08-12 00:47:31 INFO Row 0 inserted: [{'TradeDate': '20240612', 'TradeTime': '13:40:42', 'ClientCode': 'ABCS12', 'ClientTradeId': 21, 'Symbol': 'CRWD', 'Price': 387.55, 'Quantity': 844, 'Broker': 'JPMORGAN', 'Way': 'B', 'Trader': 'tbrad9452', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NASDAQ'}]
+2024-08-12 00:47:31 INFO Successfully inserted ClientTradeId 21 on TradeDate 20240612.
+2024-08-12 00:47:31 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d97143520>
+2024-08-12 00:47:31 INFO Row 1 inserted: [{'TradeDate': '20240612', 'TradeTime': '10:13:40', 'ClientCode': 'ABCS12', 'ClientTradeId': 22, 'Symbol': 'UBER', 'Price': 73.385, 'Quantity': 629, 'Broker': 'JPMORGAN', 'Way': 'B', 'Trader': 'tbrad9452', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NYSE'}]
+2024-08-12 00:47:31 INFO Successfully inserted ClientTradeId 22 on TradeDate 20240612.
+2024-08-12 00:47:31 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d97309e20>
+2024-08-12 00:47:31 INFO Row 2 inserted: [{'TradeDate': '20240612', 'TradeTime': '11:45:16', 'ClientCode': 'ABCS12', 'ClientTradeId': 23, 'Symbol': 'NFLX', 'Price': 650.09, 'Quantity': 1711, 'Broker': 'BROKERTEK', 'Way': 'B', 'Trader': 'jlin2589', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NASDAQ'}]
+2024-08-12 00:47:31 INFO Successfully inserted ClientTradeId 23 on TradeDate 20240612.
+2024-08-12 00:47:31 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d97309ee0>
+2024-08-12 00:47:31 INFO Row 3 inserted: [{'TradeDate': '20240612', 'TradeTime': '14:25:16', 'ClientCode': 'ABCS12', 'ClientTradeId': 24, 'Symbol': 'COIN', 'Price': 255.0, 'Quantity': 2313, 'Broker': 'BROKERTEK', 'Way': 'B', 'Trader': 'tbrad9452', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NASDAQ'}]
+2024-08-12 00:47:31 INFO Successfully inserted ClientTradeId 24 on TradeDate 20240612.
+2024-08-12 00:47:31 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d9731c280>
+2024-08-12 00:47:31 INFO Row 4 inserted: [{'TradeDate': '20240612', 'TradeTime': '8:29:58', 'ClientCode': 'ABCS12', 'ClientTradeId': 25, 'Symbol': 'META', 'Price': 509.4477, 'Quantity': 1975, 'Broker': 'OTHER', 'Way': 'B', 'Trader': 'tbrad9452', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NASDAQ'}]
+2024-08-12 00:47:31 INFO Successfully inserted ClientTradeId 25 on TradeDate 20240612.
+2024-08-12 00:47:31 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 00:47:31 INFO Connected to database successfully.
+2024-08-12 00:47:31 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d97a2cac0>
+2024-08-12 02:51:01 INFO Row 5 inserted: [{'TradeDate': '20240612', 'TradeTime': '13:12:30', 'ClientCode': 'ABCS12', 'ClientTradeId': 26, 'Symbol': 'UBER', 'Price': 73.385, 'Quantity': 609, 'Broker': 'OTHER', 'Way': 'S', 'Trader': 'tbrad9452', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NYSE'}]
+2024-08-12 02:51:01 INFO Successfully inserted ClientTradeId 26 on TradeDate 20240612.
+2024-08-12 02:51:01 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 02:51:01 INFO Connected to database successfully.
+2024-08-12 02:51:01 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d97313760>
+2024-08-12 02:51:01 INFO Row 6 inserted: [{'TradeDate': '20240612', 'TradeTime': '10:56:45', 'ClientCode': 'ABCS12', 'ClientTradeId': 27, 'Symbol': 'CRWD', 'Price': 387.55, 'Quantity': 122, 'Broker': 'BROKERTEK', 'Way': 'S', 'Trader': 'tbrad9452', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NASDAQ'}]
+2024-08-12 02:51:01 INFO Successfully inserted ClientTradeId 27 on TradeDate 20240612.
+2024-08-12 02:51:01 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol
+        AND Currency = :currency
+        AND Quantity < :trade_qty
+        AND BusinessDate = :trade_date
+        .
+2024-08-12 02:51:01 INFO Connected to database successfully.
+2024-08-12 02:51:01 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7f9d97309b80>
+2024-08-12 02:51:01 INFO Row 7 inserted: [{'TradeDate': '20240612', 'TradeTime': '6:37:45', 'ClientCode': 'ABCS12', 'ClientTradeId': 28, 'Symbol': 'CSCO', 'Price': 45.63, 'Quantity': 826, 'Broker': 'JPMORGAN', 'Way': 'B', 'Trader': 'jlin2589', 'SecurityType': 'stock', 'Currency': 'USD', 'Exchange': 'NASDAQ'}]
+2024-08-12 02:51:01 INFO Successfully inserted ClientTradeId 28 on TradeDate 20240612.
+2024-08-12 02:51:01 INFO Extracting data query: 
+        SELECT COUNT(*) AS Count
+        FROM TradeBooking.Positions
+        WHERE ClientCode = :client_code
+        AND Symbol = :symbol

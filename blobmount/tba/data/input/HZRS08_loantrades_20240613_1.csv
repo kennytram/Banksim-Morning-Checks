@@ -1,0 +1,2 @@
+TradeDate,TradeTime,ClientTradeId,ClientCode,FacilityType,FacilityStartDate,FacilityMaturityDate,SNCRating,GrossAmount,NetAmount,UsedAmount,Currency
+20240613,10:38:17,0157859,HZRS08,TermLoan,2024-04-01,2025-01-16,SM,8179115,4217778,3747373,USD

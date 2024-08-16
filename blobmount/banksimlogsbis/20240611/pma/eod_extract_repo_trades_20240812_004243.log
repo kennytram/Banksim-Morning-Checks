@@ -1,0 +1,21 @@
+2024-08-12 00:42:43 INFO Log file initialized.
+2024-08-12 00:42:43 INFO Starting to extract repo trades...
+2024-08-12 00:42:43 INFO Extracting data query: 
+            SELECT r.TradeId, r.ClientCode AS ClientId, r.Nominal, r.Currency, r.CollatType, c.Id as CollatId, r.StartDate, r.MaturityDate, r.TradeDate AS Timestamp
+            FROM PoseManagement.RepoTrades r
+            JOIN PoseManagement.CollatData c ON r.TradeId = c.TradeId
+            WHERE r.TradeDate <= :extract_date
+        .
+2024-08-12 00:42:43 INFO Connected to database successfully.
+2024-08-12 00:42:43 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7e4de0c74c40>
+2024-08-12 00:42:43 INFO Data written to CSV file data/output/backoffice_repo_20240611.csv
+2024-08-12 00:42:43 INFO Extracting data query: 
+            SELECT c.Id as CollatId, c.CollatType, c.CollatCurrency, c.Quantity, c.Symbol
+            FROM PoseManagement.CollatData c
+            JOIN PoseManagement.RepoTrades r ON r.TradeId = c.TradeId
+            WHERE r.TradeDate <= :extract_date
+        .
+2024-08-12 00:42:43 INFO Connected to database successfully.
+2024-08-12 00:42:43 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x7e4de0c767a0>
+2024-08-12 00:42:43 INFO Data written to CSV file data/output/collat_data_20240611.csv
+2024-08-12 00:42:43 INFO Finished extracting repo trades.

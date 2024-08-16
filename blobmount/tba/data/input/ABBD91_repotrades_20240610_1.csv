@@ -1,0 +1,2 @@
+ClientTradeId,ClientCode,Nominal,Currency,CollatType,StartDate,MaturityDate,TradeDate,TradeTime,Quantity,Instrument_Code,Price,SecurityType,Fee,Way,Trader
+342432,ABBD91,510000000,CAD,CSH,20221103,20221105,20240610,09:27:41,467480500,,1.37651,,0.03,B,mthomas4718

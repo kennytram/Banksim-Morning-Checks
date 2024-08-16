@@ -1,0 +1,11 @@
+2024-08-12 00:17:54 INFO Log file initialized.
+2024-08-12 00:17:54 INFO Starting EOD loan trade report generation...
+2024-08-12 00:17:54 INFO Extracting data query: 
+            SELECT TradeDate, TradeTime, ClientTradeId, ClientCode, FacilityType, FacilityStartDate, FacilityMaturityDate, SNCRating, GrossAmount, NetAmount, UsedAmount
+            FROM TradeBooking.LoanTrades
+            WHERE TradeDate = :extract_date
+        .
+2024-08-12 00:17:55 INFO Connected to database successfully.
+2024-08-12 00:17:55 INFO <sqlalchemy.engine.cursor.CursorResult object at 0x79cd09494e80>
+2024-08-12 00:17:55 INFO Data written to CSV file data/output/eod_loan_trades_20240610.csv
+2024-08-12 00:17:55 INFO EOD loan trade report generation completed

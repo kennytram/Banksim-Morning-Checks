@@ -1,0 +1,3 @@
+TradeDate,TradeTime,ClientTradeId,ClientCode,FacilityType,FacilityStartDate,FacilityMaturityDate,SNCRating,GrossAmount,NetAmount,UsedAmount,Currency
+20240614,09:45:23,8256817,IYQR09,TermLoan,2024-05-08,2025-02-02,P,14960235,2809485,2759009,USD
+20240614,10:38:17,3772948,IYQR09,Revolver,2023-08-23,2024-11-23,P,25512599,8052280,7194118,USD

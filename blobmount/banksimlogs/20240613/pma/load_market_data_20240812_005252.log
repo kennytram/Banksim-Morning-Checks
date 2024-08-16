@@ -1,0 +1,35 @@
+2024-08-12 00:52:52 INFO Log file initialized.
+2024-08-12 00:52:52 INFO Starting to load market data...
+2024-08-12 00:52:52 INFO Preparing to read file stock_data_{date}.csv with date 20240613
+2024-08-12 00:52:52 INFO Data read from data/input/stock_data_20240613.csv and ready to load in table Stock:    symbol     price                             name            timestamp
+0    AMZN  184.2800                 Amazon.com, Inc.  2024-06-13 12:00:00
+1    TSLA  183.8500                      Tesla, Inc.  2024-06-13 12:00:00
+2    META  504.5512             Meta Platforms, Inc.  2024-06-13 12:00:00
+3     AMD  160.3450     Advanced Micro Devices, Inc.  2024-06-13 12:00:00
+4    NFLX  652.4800                    Netflix, Inc.  2024-06-13 12:00:00
+5    CSCO   45.4550              Cisco Systems, Inc.  2024-06-13 12:00:00
+6     CRM  230.3500                 Salesforce, Inc.  2024-06-13 12:00:00
+7    PYPL   61.7200            PayPal Holdings, Inc.  2024-06-13 12:00:00
+8    CRWD  383.6200       CrowdStrike Holdings, Inc.  2024-06-13 12:00:00
+9    UBER   70.8700          Uber Technologies, Inc.  2024-06-13 12:00:00
+10   MRNA  145.3900                    Moderna, Inc.  2024-06-13 12:00:00
+11   ROKU   54.1300                       Roku, Inc.  2024-06-13 12:00:00
+12     ZM   58.3006  Zoom Video Communications, Inc.  2024-06-13 12:00:00
+13   COIN  244.2000            Coinbase Global, Inc.  2024-06-13 12:00:00
+14   HOOD   23.3199          Robinhood Markets, Inc.  2024-06-13 12:00:00
+15     SQ   62.6300                      Block, Inc.  2024-06-13 12:00:00
+16   AAPL  213.6700                       Apple Inc.  2024-06-13 12:00:00
+17   NVDA  129.5800               NVIDIA Corporation  2024-06-13 12:00:00
+2024-08-12 00:52:52 INFO Loading data into Stock...
+2024-08-12 00:52:52 INFO Connected to database successfully.
+2024-08-12 00:52:52 INFO data.sql: 18
+2024-08-12 00:52:52 INFO Data loaded successfully into Stock.
+2024-08-12 00:52:52 INFO Preparing to read file FX_{date}.csv with date 20240613
+2024-08-12 00:52:52 INFO Data read from data/input/FX_20240613.csv and ready to load in table FXRates:   OriginalCurrency TargetCurrency      Rate      FXDate
+0              USD            EUR  0.924718  2024-06-13
+1              USD            CAD  1.374170  2024-06-13
+2024-08-12 00:52:52 INFO Loading data into FXRates...
+2024-08-12 00:52:52 INFO Connected to database successfully.
+2024-08-12 00:52:52 INFO data.sql: 2
+2024-08-12 00:52:52 INFO Data loaded successfully into FXRates.
+2024-08-12 00:52:52 INFO Finished loading market data.

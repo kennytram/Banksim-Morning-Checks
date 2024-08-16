@@ -1,0 +1,2 @@
+TradeDate,TradeTime,ClientTradeId,ClientCode,FacilityType,FacilityStartDate,FacilityMaturityDate,SNCRating,GrossAmount,NetAmount,UsedAmount,Currency
+20240610,11:44:56,3329003,ADFF22,TermLoan,2022-10-23,2023-10-28,P,30000000,30000000,30000000,USD

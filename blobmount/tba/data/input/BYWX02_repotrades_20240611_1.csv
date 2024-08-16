@@ -1,0 +1,2 @@
+ClientTradeId,ClientCode,Nominal,Currency,CollatType,StartDate,MaturityDate,TradeDate,TradeTime,Quantity,Instrument_Code,Price,SecurityType,Fee,Way,Trader
+908132,BYWX02,490945412,CAD,CSH,20231012,20250124,20240611,08:45:12,490945412,,1.37651,,0.03,B,mthomas4718

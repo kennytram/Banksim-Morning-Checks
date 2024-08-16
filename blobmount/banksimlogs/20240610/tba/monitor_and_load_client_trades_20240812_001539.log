@@ -1,0 +1,73 @@
+2024-08-12 00:15:39 INFO Log file initialized.
+2024-08-12 00:15:39 INFO Starting trade file monitoring...
+2024-08-12 00:15:39 INFO Listed files in local folder data/input: ['AWXZ01_loantrades_20240611_1.csv', 'BYWX02_loantrades_20240611_1.csv', 'ACDT32_repotrades_20240610_1.csv', 'ADVF33_loantrades_20240610_1.csv', 'BYWX02_repotrades_20240611_1.csv', 'ABBD91_trades_20240611_1.csv', 'EYVT05_loantrades_20240611_1.csv', 'AWXZ01_repotrades_20240611_1.csv', 'ACDT32_loantrades_20240610_1.csv', 'ACVD53_loantrades_20240610_1.csv', 'working', 'CYZX03_repotrades_20240611_1.csv', 'JZPQ10_repotrades_20240614_1.csv', 'ADDL87_repotrades_20240610_1.csv', 'IYQR09_repotrades_20240614_1.csv', 'JZPQ10_loantrades_20240614_1.csv', 'ADDL87_loantrades_20240610_1.csv', 'EYVT05_repotrades_20240611_1.csv', 'CYZX03_loantrades_20240611_1.csv', 'DZVU04_loantrades_20240612_1.csv', 'positions_20240612.csv', 'HZRS08_repotrades_20240613_1.csv', 'FZUS06_loantrades_20240613_1.csv', 'ABDD99_loantrades_20240610_1.csv', 'GYTR07_loantrades_20240613_1.csv', 'ADFF22_loantrades_20240610_1.csv', 'positions_20240610.csv', 'ABBD91_trades_20240610_2.csv', 'DZVU04_loantrades_20240611_1.csv', 'IYQR09_loantrades_20240614_1.csv', 'FZUS06_repotrades_20240613_1.csv', 'ABCS12_loantrades_20240610_1.csv', 'ADDE98_loantrades_20240610_1.csv', 'ABBD91_repotrades_20240610_1.csv', 'GYTR07_repotrades_20240613_1.csv', 'positions_20240611.csv', 'ABDD90_repotrades_20240610_1.csv', 'ACDR21_repotrades_20240610_1.csv', 'FZUS06_repotrades_20240611_1.csv', 'DZVU04_repotrades_20240611_1.csv', 'ADCC12_loantrades_20240610_1.csv', 'HZRS08_loantrades_20240613_1.csv', 'IYQR09_loantrades_20240613_1.csv', 'ADKC09_loantrades_20240610_1.csv', 'processed', 'EYVT05_loantrades_20240612_1.csv', 'APPC12_loantrades_20240610_1.csv']
+2024-08-12 00:15:39 INFO Input file ACDT32_repotrades_20240610_1.csv moved to data/input/working/ACDT32_repotrades_20240610_1.csv.
+2024-08-12 00:15:39 INFO Calling Load Client Trade process.
+2024-08-12 00:15:46 INFO Load Client Trade process executed for ACDT32_repotrades_20240610_1.csv.
+2024-08-12 00:15:46 INFO working file ACDT32_repotrades_20240610_1.csv moved to data/input/processed/ACDT32_repotrades_20240610_1.csv.
+2024-08-12 00:15:46 INFO Input file ADVF33_loantrades_20240610_1.csv moved to data/input/working/ADVF33_loantrades_20240610_1.csv.
+2024-08-12 00:15:46 INFO Calling Load Client Trade process.
+2024-08-12 00:15:56 INFO Load Client Trade process executed for ADVF33_loantrades_20240610_1.csv.
+2024-08-12 00:15:56 INFO working file ADVF33_loantrades_20240610_1.csv moved to data/input/processed/ADVF33_loantrades_20240610_1.csv.
+2024-08-12 00:15:56 INFO Input file ACDT32_loantrades_20240610_1.csv moved to data/input/working/ACDT32_loantrades_20240610_1.csv.
+2024-08-12 00:15:56 INFO Calling Load Client Trade process.
+2024-08-12 00:16:07 INFO Load Client Trade process executed for ACDT32_loantrades_20240610_1.csv.
+2024-08-12 00:16:07 INFO working file ACDT32_loantrades_20240610_1.csv moved to data/input/processed/ACDT32_loantrades_20240610_1.csv.
+2024-08-12 00:16:07 INFO Input file ACVD53_loantrades_20240610_1.csv moved to data/input/working/ACVD53_loantrades_20240610_1.csv.
+2024-08-12 00:16:07 INFO Calling Load Client Trade process.
+2024-08-12 00:16:17 INFO Load Client Trade process executed for ACVD53_loantrades_20240610_1.csv.
+2024-08-12 00:16:17 INFO working file ACVD53_loantrades_20240610_1.csv moved to data/input/processed/ACVD53_loantrades_20240610_1.csv.
+2024-08-12 00:16:17 INFO Input file ADDL87_repotrades_20240610_1.csv moved to data/input/working/ADDL87_repotrades_20240610_1.csv.
+2024-08-12 00:16:17 INFO Calling Load Client Trade process.
+2024-08-12 00:16:25 INFO Load Client Trade process executed for ADDL87_repotrades_20240610_1.csv.
+2024-08-12 00:16:25 INFO working file ADDL87_repotrades_20240610_1.csv moved to data/input/processed/ADDL87_repotrades_20240610_1.csv.
+2024-08-12 00:16:25 INFO Input file ADDL87_loantrades_20240610_1.csv moved to data/input/working/ADDL87_loantrades_20240610_1.csv.
+2024-08-12 00:16:25 INFO Calling Load Client Trade process.
+2024-08-12 00:16:28 INFO Load Client Trade process executed for ADDL87_loantrades_20240610_1.csv.
+2024-08-12 00:16:28 INFO working file ADDL87_loantrades_20240610_1.csv moved to data/input/processed/ADDL87_loantrades_20240610_1.csv.
+2024-08-12 00:16:28 INFO Input file ABDD99_loantrades_20240610_1.csv moved to data/input/working/ABDD99_loantrades_20240610_1.csv.
+2024-08-12 00:16:28 INFO Calling Load Client Trade process.
+2024-08-12 00:16:32 INFO Load Client Trade process executed for ABDD99_loantrades_20240610_1.csv.
+2024-08-12 00:16:32 INFO working file ABDD99_loantrades_20240610_1.csv moved to data/input/processed/ABDD99_loantrades_20240610_1.csv.
+2024-08-12 00:16:32 INFO Input file ADFF22_loantrades_20240610_1.csv moved to data/input/working/ADFF22_loantrades_20240610_1.csv.
+2024-08-12 00:16:32 INFO Calling Load Client Trade process.
+2024-08-12 00:16:35 INFO Load Client Trade process executed for ADFF22_loantrades_20240610_1.csv.
+2024-08-12 00:16:35 INFO working file ADFF22_loantrades_20240610_1.csv moved to data/input/processed/ADFF22_loantrades_20240610_1.csv.
+2024-08-12 00:16:35 INFO Input file ABBD91_trades_20240610_2.csv moved to data/input/working/ABBD91_trades_20240610_2.csv.
+2024-08-12 00:16:35 INFO Calling Load Client Trade process.
+2024-08-12 00:16:39 INFO Load Client Trade process executed for ABBD91_trades_20240610_2.csv.
+2024-08-12 00:16:39 INFO working file ABBD91_trades_20240610_2.csv moved to data/input/processed/ABBD91_trades_20240610_2.csv.
+2024-08-12 00:16:39 INFO Input file ABCS12_loantrades_20240610_1.csv moved to data/input/working/ABCS12_loantrades_20240610_1.csv.
+2024-08-12 00:16:39 INFO Calling Load Client Trade process.
+2024-08-12 00:16:42 INFO Load Client Trade process executed for ABCS12_loantrades_20240610_1.csv.
+2024-08-12 00:16:42 INFO working file ABCS12_loantrades_20240610_1.csv moved to data/input/processed/ABCS12_loantrades_20240610_1.csv.
+2024-08-12 00:16:42 INFO Input file ADDE98_loantrades_20240610_1.csv moved to data/input/working/ADDE98_loantrades_20240610_1.csv.
+2024-08-12 00:16:42 INFO Calling Load Client Trade process.
+2024-08-12 00:16:45 INFO Load Client Trade process executed for ADDE98_loantrades_20240610_1.csv.
+2024-08-12 00:16:45 INFO working file ADDE98_loantrades_20240610_1.csv moved to data/input/processed/ADDE98_loantrades_20240610_1.csv.
+2024-08-12 00:16:45 INFO Input file ABBD91_repotrades_20240610_1.csv moved to data/input/working/ABBD91_repotrades_20240610_1.csv.
+2024-08-12 00:16:45 INFO Calling Load Client Trade process.
+2024-08-12 00:16:48 INFO Load Client Trade process executed for ABBD91_repotrades_20240610_1.csv.
+2024-08-12 00:16:48 INFO working file ABBD91_repotrades_20240610_1.csv moved to data/input/processed/ABBD91_repotrades_20240610_1.csv.
+2024-08-12 00:16:48 INFO Input file ABDD90_repotrades_20240610_1.csv moved to data/input/working/ABDD90_repotrades_20240610_1.csv.
+2024-08-12 00:16:48 INFO Calling Load Client Trade process.
+2024-08-12 00:16:52 INFO Load Client Trade process executed for ABDD90_repotrades_20240610_1.csv.
+2024-08-12 00:16:52 INFO working file ABDD90_repotrades_20240610_1.csv moved to data/input/processed/ABDD90_repotrades_20240610_1.csv.
+2024-08-12 00:16:52 INFO Input file ACDR21_repotrades_20240610_1.csv moved to data/input/working/ACDR21_repotrades_20240610_1.csv.
+2024-08-12 00:16:52 INFO Calling Load Client Trade process.
+2024-08-12 00:17:00 INFO Load Client Trade process executed for ACDR21_repotrades_20240610_1.csv.
+2024-08-12 00:17:00 INFO working file ACDR21_repotrades_20240610_1.csv moved to data/input/processed/ACDR21_repotrades_20240610_1.csv.
+2024-08-12 00:17:00 INFO Input file ADCC12_loantrades_20240610_1.csv moved to data/input/working/ADCC12_loantrades_20240610_1.csv.
+2024-08-12 00:17:00 INFO Calling Load Client Trade process.
+2024-08-12 00:17:03 INFO Load Client Trade process executed for ADCC12_loantrades_20240610_1.csv.
+2024-08-12 00:17:03 INFO working file ADCC12_loantrades_20240610_1.csv moved to data/input/processed/ADCC12_loantrades_20240610_1.csv.
+2024-08-12 00:17:03 INFO Input file ADKC09_loantrades_20240610_1.csv moved to data/input/working/ADKC09_loantrades_20240610_1.csv.
+2024-08-12 00:17:03 INFO Calling Load Client Trade process.
+2024-08-12 00:17:06 INFO Load Client Trade process executed for ADKC09_loantrades_20240610_1.csv.
+2024-08-12 00:17:06 INFO working file ADKC09_loantrades_20240610_1.csv moved to data/input/processed/ADKC09_loantrades_20240610_1.csv.
+2024-08-12 00:17:06 INFO Input file APPC12_loantrades_20240610_1.csv moved to data/input/working/APPC12_loantrades_20240610_1.csv.
+2024-08-12 00:17:06 INFO Calling Load Client Trade process.
+2024-08-12 00:17:10 INFO Load Client Trade process executed for APPC12_loantrades_20240610_1.csv.
+2024-08-12 00:17:10 INFO working file APPC12_loantrades_20240610_1.csv moved to data/input/processed/APPC12_loantrades_20240610_1.csv.
+2024-08-12 00:17:10 INFO Listed files in local folder data/input: ['AWXZ01_loantrades_20240611_1.csv', 'BYWX02_loantrades_20240611_1.csv', 'BYWX02_repotrades_20240611_1.csv', 'ABBD91_trades_20240611_1.csv', 'EYVT05_loantrades_20240611_1.csv', 'AWXZ01_repotrades_20240611_1.csv', 'working', 'CYZX03_repotrades_20240611_1.csv', 'JZPQ10_repotrades_20240614_1.csv', 'IYQR09_repotrades_20240614_1.csv', 'JZPQ10_loantrades_20240614_1.csv', 'EYVT05_repotrades_20240611_1.csv', 'CYZX03_loantrades_20240611_1.csv', 'DZVU04_loantrades_20240612_1.csv', 'positions_20240612.csv', 'HZRS08_repotrades_20240613_1.csv', 'FZUS06_loantrades_20240613_1.csv', 'GYTR07_loantrades_20240613_1.csv', 'positions_20240610.csv', 'DZVU04_loantrades_20240611_1.csv', 'IYQR09_loantrades_20240614_1.csv', 'FZUS06_repotrades_20240613_1.csv', 'GYTR07_repotrades_20240613_1.csv', 'positions_20240611.csv', 'FZUS06_repotrades_20240611_1.csv', 'DZVU04_repotrades_20240611_1.csv', 'HZRS08_loantrades_20240613_1.csv', 'IYQR09_loantrades_20240613_1.csv', 'processed', 'EYVT05_loantrades_20240612_1.csv']
+2024-08-12 00:17:10 INFO No CSV trade files of the load date 20240610 found in the input folder.

@@ -1,0 +1,19 @@
+symbol,price,name,timestamp
+AMZN,187.23,"Amazon.com, Inc.",2024-06-11 12:00:00
+TSLA,170.66,"Tesla, Inc.",2024-06-11 12:00:00
+META,507.47,"Meta Platforms, Inc.",2024-06-11 12:00:00
+AMD,158.96,"Advanced Micro Devices, Inc.",2024-06-11 12:00:00
+NFLX,648.55,"Netflix, Inc.",2024-06-11 12:00:00
+CSCO,45.77,"Cisco Systems, Inc.",2024-06-11 12:00:00
+CRM,240.99,"Salesforce, Inc.",2024-06-11 12:00:00
+PYPL,64.77,"PayPal Holdings, Inc.",2024-06-11 12:00:00
+CRWD,384.63,"CrowdStrike Holdings, Inc.",2024-06-11 12:00:00
+UBER,69.59,"Uber Technologies, Inc.",2024-06-11 12:00:00
+MRNA,148.39,"Moderna, Inc.",2024-06-11 12:00:00
+ROKU,58.17,"Roku, Inc.",2024-06-11 12:00:00
+ZM,62.85,"Zoom Video Communications, Inc.",2024-06-11 12:00:00
+COIN,244.2,"Coinbase Global, Inc.",2024-06-11 12:00:00
+HOOD,23.22,"Robinhood Markets, Inc.",2024-06-11 12:00:00
+SQ,64.16,"Block, Inc.",2024-06-11 12:00:00
+AAPL,207.15,"Apple Inc.",2024-06-11 12:00:00
+NVDA,120.91,"NVIDIA Corporation",2024-06-11 12:00:00

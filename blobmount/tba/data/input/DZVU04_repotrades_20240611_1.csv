@@ -1,0 +1,3 @@
+ClientTradeId,ClientCode,Nominal,Currency,CollatType,StartDate,MaturityDate,TradeDate,TradeTime,Quantity,Instrument_Code,Price,SecurityType,Fee,Way,Trader
+143380,DZVU04,433308383,USD,EQT,20240327,20250220,20240611,08:59:02,2397280,AMZN,187.23,stock,0.03,B,mthomas4718
+155759,DZVU04,490058740,CAD,CSH,20231025,20240921,20240611,09:43:18,490058740,,1.37651,,0.03,B,mthomas4718

@@ -1,0 +1,190 @@
+2024-08-12 00:53:22 INFO Log file initialized.
+2024-08-12 00:53:22 INFO Starting to load referential data...
+2024-08-12 00:53:22 INFO Preparing to read file Clients_{date}.csv with date 20240613
+2024-08-12 00:53:22 INFO Data read from data/input/Clients_20240613.csv and ready to load in table Client:    ClientCode                      Name  ...         PCRU      RiskCell
+0      APPC12       Petroleus Venezuela  ...  GIS/CIB/NRG  RISK/CIB/NRG
+1      ADKC09                      AT&T  ...  GIS/CIB/COR  RISK/CIB/COR
+2      ABDD99                    ROGERS  ...  GIS/CIB/COR  RISK/CIB/COR
+3      ABCS12               TIM HORTONS  ...  GIS/CIB/COR  RISK/CIB/COR
+4      ABDD90         OPSCO Bank Canada  ...   GIS/FIN/CA   RISK/FIN/CA
+5      ABBD91             OPSCO Bank US  ...   GIS/FIN/US   RISK/FIN/US
+6      ADDL87          Bank of Montreal  ...   GIS/FIN/CA   RISK/FIN/CA
+7      ADDE98    UNIVERSITY OF COLUMBIA  ...   GIS/FIN/US   RISK/FIN/US
+8      ACVD53         Coca Cola Company  ...  GIS/CIB/COR  RISK/CIB/COR
+9      ACDT32         STATE STREET BANK  ...   GIS/FIN/US   RISK/FIN/US
+10     ACDR21                 Blackrock  ...   GIS/FIN/US   RISK/FIN/US
+11     ADVF33  UNIVERSITY OF LOUISVILLE  ...   GIS/FIN/US   RISK/FIN/US
+12     ADFF22                      WHO   ...  GIS/CIB/OTH  RISK/CIB/OTH
+13     ADCC12          TESLA INDUSTRIES  ...  GIS/CIB/NRG  RISK/CIB/NRG
+14     FZUS06                       IBM  ...  GIS/CIB/COR  RISK/CIB/COR
+15     GYTR07          General Electric  ...  GIS/CIB/COR  RISK/CIB/COR
+16     HZRS08             Cisco Systems  ...  GIS/CIB/COR  RISK/CIB/COR
+17     AWXZ01                 Microsoft  ...  GIS/CIB/COR  RISK/CIB/COR
+18     BYWX02                Apple Inc.  ...  GIS/CIB/COR  RISK/CIB/COR
+19     CYZX03             Goldman Sachs  ...   GIS/FIN/US   RISK/FIN/US
+20     DZVU04                    Amazon  ...  GIS/CIB/COR  RISK/CIB/COR
+21     EYVT05        Ford Motor Company  ...  GIS/CIB/COR  RISK/CIB/COR
+
+[22 rows x 10 columns]
+2024-08-12 00:53:22 INFO Connected to database successfully.
+2024-08-12 00:53:22 INFO Truncate table creditriskdb.Client attempt
+2024-08-12 00:53:23 INFO Truncate table successfully creditriskdb.Client.
+2024-08-12 00:53:23 INFO Loading data into Client...
+2024-08-12 00:53:23 INFO Connected to database successfully.
+2024-08-12 00:53:23 INFO data.sql: 22
+2024-08-12 00:53:23 INFO Data loaded successfully into Client.
+2024-08-12 00:53:23 INFO Preparing to read file Clients_rating_{date}.csv with date 20240613
+2024-08-12 00:53:23 INFO Data read from data/input/Clients_rating_20240613.csv and ready to load in table ClientRating:    ClientCode Rating  RatingDate            timestamp
+0      APPC12      2  2023-12-25  2024-06-13 12:00:00
+1      ADKC09     3+  2023-11-15  2024-06-13 12:00:00
+2      ABDD99     3-  2024-02-10  2024-06-13 12:00:00
+3      ABCS12     4+  2024-01-05  2024-06-13 12:00:00
+4      ABDD90      2  2023-10-30  2024-06-13 12:00:00
+5      ABBD91      2  2024-03-20  2024-06-13 12:00:00
+6      ADDL87     2-  2024-05-14  2024-06-13 12:00:00
+7      ADDE98     4+  2023-07-20  2024-06-13 12:00:00
+8      ACVD53     3+  2023-08-25  2024-06-13 12:00:00
+9      ACDT32     2-  2023-09-15  2024-06-13 12:00:00
+10     ACDR21      2  2023-10-10  2024-06-13 12:00:00
+11     ADVF33      5  2023-07-01  2024-06-13 12:00:00
+12     ADFF22     3+  2023-11-25  2024-06-13 12:00:00
+13     ADCC12     7-  2024-03-05  2024-06-13 12:00:00
+14     FZUS06      2  2023-10-05  2024-06-13 12:00:00
+15     GYTR07     2-  2023-08-10  2024-06-13 12:00:00
+16     HZRS08     4+  2024-02-25  2024-06-13 12:00:00
+17     AWXZ01      2  2024-01-12  2024-06-13 12:00:00
+18     BYWX02     3+  2023-08-18  2024-06-13 12:00:00
+19     DZVU04     4+  2024-04-15  2024-06-13 12:00:00
+20     EYVT05      2  2024-03-10  2024-06-13 12:00:00
+2024-08-12 00:53:23 INFO Loading data into ClientRating...
+2024-08-12 00:53:23 INFO Connected to database successfully.
+2024-08-12 00:53:23 INFO data.sql: 21
+2024-08-12 00:53:23 INFO Data loaded successfully into ClientRating.
+2024-08-12 00:53:23 INFO Preparing to read file credit_limit_data_{date}.csv with date 20240613
+2024-08-12 00:53:23 INFO Data read from data/input/credit_limit_data_20240613.csv and ready to load in table Limit:    ClientId     LIM001     LIM002  ...     LIM005     LIM006            timestamp
+0    APPC12  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+1    ADKC09  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+2    ABDD99  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+3    ABCS12  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+4    ABDD90  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+5    ABBD91  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+6    ADDL87          0          0  ...          0          0  2024-06-13 12:00:00
+7    ADDE98  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+8    ACVD53  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+9    ACDT32          0          0  ...          0          0  2024-06-13 12:00:00
+10   ACDR21  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+11   ADVF33  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+12   ADFF22  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+13   ADCC12  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+14   FZUS06  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+15   GYTR07  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+16   HZRS08  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+17   AWXZ01  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+18   BYWX02  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+19   CYZX03  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+20   DZVU04  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+21   EYVT05  100000000  100000000  ...  100000000  100000000  2024-06-13 12:00:00
+
+[22 rows x 8 columns]
+2024-08-12 00:53:23 INFO Loading data into Limit...
+2024-08-12 00:53:23 INFO Connected to database successfully.
+2024-08-12 00:53:23 INFO data.sql: 22
+2024-08-12 00:53:23 INFO Data loaded successfully into Limit.
+2024-08-12 00:53:23 INFO Preparing to read file master_contract_{date}.csv with date 20240613
+2024-08-12 00:53:23 INFO Data read from data/input/master_contract_20240613.csv and ready to load in table MasterContract:     ContractId ContractType ClientId  Threshold
+0           34         MLSA   ABDD90      50000
+1           21         MLSA   ABBD91     100000
+2         2331         MLSA   ADDL87    1000000
+3        44225         MLSA   ACDT32    1000000
+4          767         MLSA   ACDR21    1000000
+5         3420         MLSA   FZUS06     100000
+6         2130         MLSA   GYTR07    1000000
+7       233201         MLSA   HZRS08    1000000
+8         3401         MLSA   AWXZ01      50000
+9         2101         MLSA   BYWX02     100000
+10      233101         MLSA   CYZX03    1000000
+11     4422501         MLSA   DZVU04    1000000
+12       76701         MLSA   EYVT05      50000
+2024-08-12 00:53:23 INFO Connected to database successfully.
+2024-08-12 00:53:23 INFO Truncate table creditriskdb.MasterContract attempt
+2024-08-12 00:53:24 INFO Truncate table successfully creditriskdb.MasterContract.
+2024-08-12 00:53:24 INFO Loading data into MasterContract...
+2024-08-12 00:53:24 INFO Connected to database successfully.
+2024-08-12 00:53:24 INFO data.sql: 13
+2024-08-12 00:53:24 INFO Data loaded successfully into MasterContract.
+2024-08-12 00:53:24 INFO Preparing to read file MasterContractProductData_{date}.csv with date 20240613
+2024-08-12 00:53:24 INFO Data read from data/input/MasterContractProductData_20240613.csv and ready to load in table MasterProductData:     ContractId ProductCovered
+0           34             RP
+1           21             RP
+2         2331             RP
+3        44225             RP
+4          767             RP
+5         3420             RP
+6         2130             RP
+7       233201             RP
+8         3401             RP
+9         2101             RP
+10      233101             RP
+11     4422501             RP
+12       76701             RP
+2024-08-12 00:53:24 INFO Connected to database successfully.
+2024-08-12 00:53:24 INFO Truncate table creditriskdb.MasterProductData attempt
+2024-08-12 00:53:24 INFO Truncate table successfully creditriskdb.MasterProductData.
+2024-08-12 00:53:24 INFO Loading data into MasterProductData...
+2024-08-12 00:53:24 INFO Connected to database successfully.
+2024-08-12 00:53:24 INFO data.sql: 13
+2024-08-12 00:53:24 INFO Data loaded successfully into MasterProductData.
+2024-08-12 00:53:24 INFO Preparing to read file Client_PTF_{date}.csv with date 20240613
+2024-08-12 00:53:24 INFO Data read from data/input/Client_PTF_20240613.csv and ready to load in table ClientPTF:    ClientId  CodPTF ProductType
+0    APPC12  SEG12G          RP
+1    ADKC09  MRP32F          RP
+2    ABDD99  DKF09K          RP
+3    ABCS12  ARQ09F          RP
+4    ABDD90  QRE79P          RP
+5    ABBD91  LKT43Q          RP
+6    ADDL87  JHD67R          RP
+7    ADDE98  FGN89S          RP
+8    ACVD53  BVC56T          RP
+9    ACDT32  OPQ87U          RP
+10   ACDR21  WEW45F          RP
+11   ADVF33  BOO54A          RP
+12   ADFF22  FDF39X          RP
+13   ADCC12  VCS67U          RP
+14   APPC12  QRS89D         LOA
+15   ADKC09  UVW91E         LOA
+16   ABDD99  JKL23F         LOA
+17   ABCS12  ABC56G         LOA
+18   ABDD90  DEF98H         LOA
+19   ABBD91  GHI12I         LOA
+20   ADDL87  MNO34J         LOA
+21   ADDE98  STU67K         LOA
+22   ACVD53  VWX09L         LOA
+23   ACDT32  YZA76M         LOA
+24   ACDR21  BCD54N         LOA
+25   ADVF33  CDE32O         LOA
+26   ADFF22  EFG21P         LOA
+27   ADCC12  GHI43Q         LOA
+28   AWXZ01  XEO01P          RP
+29   BYWX02  BOD22Q          RP
+30   CYZX03  IOS88R          RP
+31   DZVU04  CGB57O          RP
+32   EYVT05  QFH62X          RP
+33   AWXZ01  PAM97A         LOA
+34   BYWX02  VFX11U         LOA
+35   CYZX03  TLT86P         LOA
+36   DZVU04  RMT77Y         LOA
+37   EYVT05  AJY25N         LOA
+38   FZUS06  PHB64K          RP
+39   GYTR07  MME83R          RP
+40   HZRS08  CVI83Z          RP
+41   FZUS06  KIB62N         LOA
+42   GYTR07  MZW50E         LOA
+43   HZRS08  XQN89X         LOA
+2024-08-12 00:53:24 INFO Connected to database successfully.
+2024-08-12 00:53:24 INFO Truncate table creditriskdb.ClientPTF attempt
+2024-08-12 00:53:24 INFO Truncate table successfully creditriskdb.ClientPTF.
+2024-08-12 00:53:24 INFO Loading data into ClientPTF...
+2024-08-12 00:53:24 INFO Connected to database successfully.
+2024-08-12 00:53:25 INFO data.sql: 44
+2024-08-12 00:53:25 INFO Data loaded successfully into ClientPTF.
+2024-08-12 00:53:25 INFO Finished loading referential data.

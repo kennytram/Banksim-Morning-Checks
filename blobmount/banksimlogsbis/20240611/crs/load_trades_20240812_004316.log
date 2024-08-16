@@ -1,0 +1,91 @@
+2024-08-12 00:43:16 INFO Log file initialized.
+2024-08-12 00:43:16 INFO Starting to load trade data...
+2024-08-12 00:43:16 INFO Preparing to read file backoffice_repo_{date}.csv with date 20240611
+2024-08-12 00:43:16 INFO Data read from data/input/backoffice_repo_20240611.csv and ready to load in table BackOffice_Repo:      TradeId ClientId      Nominal  ...   StartDate MaturityDate   Timestamp
+0   RP833434   ABDD90  200000000.0  ...  2022-11-03   2022-11-05  2024-06-10
+1   RP234987   ADDL87  140000000.0  ...  2022-11-03   2022-11-05  2024-06-10
+2    RP80763   ACDT32  233000000.0  ...  2022-11-03   2022-11-04  2024-06-10
+3    RP79397   ACDT32  170000000.0  ...  2022-12-07   2022-12-12  2024-06-10
+4   RP900963   ACDR21  200000000.0  ...  2022-11-03   2022-11-05  2024-06-10
+5   RP988444   ACDR21  340000000.0  ...  2022-11-03   2022-11-05  2024-06-10
+6    RP99833   ACDR21  200000000.0  ...  2022-11-03   2022-11-05  2024-06-10
+7   RP342432   ABBD91  510000000.0  ...  2022-11-03   2022-11-05  2024-06-10
+8   RP835910   FZUS06  196397764.0  ...  2024-02-16   2024-10-22  2024-06-11
+9   RP277590   AWXZ01  171912849.0  ...  2023-12-05   2025-01-28  2024-06-11
+10  RP971224   AWXZ01  120845355.0  ...  2023-06-08   2024-12-17  2024-06-11
+11  RP651585   AWXZ01  445153158.0  ...  2024-05-06   2025-03-17  2024-06-11
+12  RP397719   CYZX03  410255644.0  ...  2023-12-21   2024-07-20  2024-06-11
+13  RP854559   CYZX03  368727988.0  ...  2024-02-01   2025-04-22  2024-06-11
+14  RP143380   DZVU04  433308383.0  ...  2024-03-27   2025-02-20  2024-06-11
+15  RP155759   DZVU04  490058740.0  ...  2023-10-25   2024-09-21  2024-06-11
+16  RP630506   EYVT05  178437299.0  ...  2023-08-13   2025-01-04  2024-06-11
+17  RP276532   EYVT05  282311331.0  ...  2024-02-19   2025-05-06  2024-06-11
+18  RP908132   BYWX02  490945412.0  ...  2023-10-12   2025-01-24  2024-06-11
+
+[19 rows x 9 columns]
+2024-08-12 00:43:16 INFO Connected to database successfully.
+2024-08-12 00:43:16 INFO Truncate table creditriskdb.BackOffice_Repo attempt
+2024-08-12 00:43:16 INFO Truncate table successfully creditriskdb.BackOffice_Repo.
+2024-08-12 00:43:16 INFO Loading data into BackOffice_Repo...
+2024-08-12 00:43:16 INFO Connected to database successfully.
+2024-08-12 00:43:16 INFO data.sql: 19
+2024-08-12 00:43:16 INFO Data loaded successfully into BackOffice_Repo.
+2024-08-12 00:43:16 INFO Preparing to read file backoffice_loans_{date}.csv with date 20240611
+2024-08-12 00:43:16 INFO Data read from data/input/backoffice_loans_20240611.csv and ready to load in table BackOffice_Loan:        TradeId ClientId FacilityType  ...   NetAmount  UsedAmount   Timestamp
+0   LOA3329003   ADFF22     TermLoan  ...  30000000.0  30000000.0  2024-06-10
+1   LOA4830232   ADDE98     TermLoan  ...    300000.0   3000000.0  2024-06-10
+2   LOA1193923   ADCC12     TermLoan  ...    300000.0   3000000.0  2024-06-10
+3   LOA9803223   ABDD99     Revolver  ...   2000000.0   1233330.0  2024-06-10
+4    LOA983807   ADKC09     Revolver  ...    300000.0     23030.0  2024-06-10
+5   LOA2407333   ADVF33     TermLoan  ...    300000.0     30000.0  2024-06-10
+6   LOA8993746   ACDT32     TermLoan  ...   2000000.0  30000000.0  2024-06-10
+7   LOA3423322   APPC12     Revolver  ...   2000000.0     20000.0  2024-06-10
+8   LOA8946839   ACVD53     TermLoan  ...   2000000.0  30000000.0  2024-06-10
+9   LOA9879643   ABCS12     Revolver  ...    300000.0      2333.0  2024-06-10
+10  LOA2904833   ADDL87     TermLoan  ...   2000000.0  30000000.0  2024-06-10
+11  LOA6724285   AWXZ01     TermLoan  ...  21424778.0    741456.0  2024-06-11
+12  LOA9044310   EYVT05     TermLoan  ...   6765625.0   2740000.0  2024-06-11
+13  LOA2829941   EYVT05     TermLoan  ...   7219510.0   2406675.0  2024-06-11
+14  LOA4202570   CYZX03     Revolver  ...   5566978.0   5562271.0  2024-06-11
+15  LOA5128081   BYWX02     TermLoan  ...   4099901.0    991925.0  2024-06-11
+16  LOA5304813   BYWX02     TermLoan  ...  31410407.0  14925754.0  2024-06-11
+17  LOA2407529   BYWX02     TermLoan  ...  39039634.0  23486640.0  2024-06-11
+18  LOA9979319   DZVU04     TermLoan  ...   2814900.0   2388806.0  2024-06-11
+
+[19 rows x 10 columns]
+2024-08-12 00:43:16 INFO Connected to database successfully.
+2024-08-12 00:43:16 INFO Truncate table creditriskdb.BackOffice_Loan attempt
+2024-08-12 00:43:17 INFO Truncate table successfully creditriskdb.BackOffice_Loan.
+2024-08-12 00:43:17 INFO Loading data into BackOffice_Loan...
+2024-08-12 00:43:17 INFO Connected to database successfully.
+2024-08-12 00:43:17 INFO data.sql: 19
+2024-08-12 00:43:17 INFO Data loaded successfully into BackOffice_Loan.
+2024-08-12 00:43:17 INFO Preparing to read file collat_data_{date}.csv with date 20240611
+2024-08-12 00:43:17 INFO Data read from data/input/collat_data_20240611.csv and ready to load in table CollatData:     CollatId CollatType CollatCurrency     Quantity Symbol
+0          1        CSH            CAD  467480500.0    NaN
+1          2        EQT            USD    1156471.0   AAPL
+2          3        EQT            USD     842085.0   MSFT
+3          4        EQT            USD    1147382.0   AMZN
+4          5        CSH            CAD  311654000.0    NaN
+5          6        CSH            CAD  315007500.0    NaN
+6          7        CSH            CAD  189275000.0    NaN
+7          8        EQT            USD     985174.0   NVDA
+8          9        CSH            CAD  490945412.0    NaN
+9         10        EQT            USD   21649642.0      F
+10        11        EQT            USD   13683842.0      F
+11        12        CSH            CAD  490058740.0    NaN
+12        13        EQT            USD    2397280.0   AMZN
+13        14        CSH            CAD  368727988.0    NaN
+14        15        EQT            USD    2160491.0   AAPL
+15        16        EQT            USD    1034855.0   MSFT
+16        17        EQT            USD     280931.0   MSFT
+17        18        CSH            CAD  171912849.0    NaN
+18        19        EQT            USD   15061178.0      F
+2024-08-12 00:43:17 INFO Connected to database successfully.
+2024-08-12 00:43:17 INFO Truncate table creditriskdb.CollatData attempt
+2024-08-12 00:43:17 INFO Truncate table successfully creditriskdb.CollatData.
+2024-08-12 00:43:17 INFO Loading data into CollatData...
+2024-08-12 00:43:17 INFO Connected to database successfully.
+2024-08-12 00:43:17 INFO data.sql: 19
+2024-08-12 00:43:17 INFO Data loaded successfully into CollatData.
+2024-08-12 00:43:17 INFO Finished loading trade data.

@@ -12,6 +12,7 @@ dotenv.load_dotenv()
 IS_DEVELOPMENT = os.getenv("IS_DEVELOPMENT")
 base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
 
+
 class FileChecker:
     def __init__(self, base_dir, business_date):
         self.base_dir = base_dir
@@ -61,10 +62,10 @@ class FileChecker:
         print(f"# of Input files in TBA: {self.input_files_tba}")
         print(f"# of Output files in PMA: {self.output_files_pma}")
         print(f"# of Output files in TBA: {self.output_files_tba}")
-    
+
+
 def get_trade_counts(date):
 
-    
     conn_str = (
         "mssql+pyodbc://banksimdb02:CAVABIENALLEZLA!4@banksim.database.windows.net/opscodb"
         "?driver=ODBC+Driver+17+for+SQL+Server"

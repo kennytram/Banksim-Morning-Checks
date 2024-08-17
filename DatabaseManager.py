@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from datetime import datetime
 import pandas as pd
 
+
 class DatabaseManager:
     def __init__(self, files_dir):
         self.files_dir = files_dir

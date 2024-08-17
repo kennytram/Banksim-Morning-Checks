@@ -45,10 +45,15 @@ IS_DEVELOPMENT = os.getenv("IS_DEVELOPMENT")
 SYS_NECESSARY_FILES = {"crs": {}, "pma": {}, "tba": {}}
 base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
 
+
 class Banksim:
 
     def __init__(self, dir: str, business_dates: list) -> None:
-        self.__systems = {"tba": TBAHealthCheck(dir), "pma": PMAHealthCheck(dir), "crs": CRSHealthCheck(dir)}
+        self.__systems = {
+            "tba": TBAHealthCheck(dir),
+            "pma": PMAHealthCheck(dir),
+            "crs": CRSHealthCheck(dir),
+        }
         self.business_dates = business_dates
         self.db_manager = DatabaseManager()
 
@@ -60,6 +65,7 @@ class Banksim:
 
     def crs(self) -> ApplicationHealthCheck:
         return self.__systems["crs"]
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

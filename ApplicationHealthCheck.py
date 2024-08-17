@@ -1,6 +1,7 @@
 import ZipManager
 import FileChecker
 
+
 class ApplicationHealthCheck:
 
     def __init__(self, base_dir):
@@ -12,6 +13,7 @@ class ApplicationHealthCheck:
 
     def archive(self):
         self.zip_manager.archive([], [])
+
 
 class TBAHealthCheck(ApplicationHealthCheck):
 

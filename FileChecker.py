@@ -1,6 +1,7 @@
 import os
 import glob
 
+
 class FileChecker:
     def __init__(self, base_dir, business_date):
         self.base_dir = base_dir

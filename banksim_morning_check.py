@@ -1,3 +1,28 @@
+'''
+# Original Checks
+# File Metrics : Total Input, Ouput and Log files
+# Reconciliation : Compare trades received ( in input ) VS trades loaded ( in DB )
+# Errors check : Include all the possible errors we can find
+# Archiving : tar.gz the logs, output and input
+# Checks added Tuesday
+# Log files : Display the number of log files by category (i.e load_market_data, load_trade )
+    - Each System should be responsible for this
+    - Can use FileChecker for this  
+# Checks added Wednesday
+# Reconciliation Log : For each extracting process, analyze log files and if an output is generated based on the log, check in the data output folder
+# New checks
+# The script should not run on a weekend or a banking holiday
+# Data Storage
+# Database : Build a database table to store the result of the morning check, including all the checks list above
+# File Size Anomaly :
+# Build a control to retrieve the number of file having a size changing by +/- 20%
+# Scope : PMA/CRS application. All files
+# Example : Size change between backoffice_repo20240610.csv and backoffice_repo20240611.csv
+# Trade Chain Reconciliation
+# Using the database, check the trades input between tba, pma and crs. Only consider all types of trades between tba and pma. Consider only repo and loan between pma and crs.
+# Alerts :
+# Based on the table below setup alerts for each check
+'''
 import os
 import glob
 import argparse
@@ -6,12 +31,54 @@ from sqlalchemy import create_engine
 from datetime import datetime
 import dotenv
 
+class Banksim:
 
-# global variables that are changeable
-dotenv.load_dotenv()
-IS_DEVELOPMENT = os.getenv("IS_DEVELOPMENT")
-base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
+    def __init__(self, dir):
+        self.__systems = {
+            "tba" : TBA(dir),
+            "pma" : PMA(dir),
+            "crs" : CRS(dir)
+        }
+        self.__dir = dir
+    
+    def tba(self):
+        return self.__systems["tba"]
+    
+    def pma(self):
+        return self.__systems["pma"]
+    
+    def crs(self):
+        return self.__systems["crs"]
 
+class System:
+
+    def __init__(self, base_dir):
+        self.base_dir = base_dir
+        self.logs_dir = f"{base_dir}/banksimlogs"
+
+class TBA(System):
+
+    def __init__(self, base_dir):
+        super().__init__(base_dir)
+        self.name = "Trade Booking App"
+        self.symbol = "TBA"
+        self.base_dir = f"{super().base_dir}/{self.symbol.lower()}"
+
+class PMA(System):
+
+    def __init__(self, base_dir):
+        super().__init__(base_dir)
+        self.name = "Position Management App"
+        self.symbol = "PMA"
+        self.base_dir = f"{super().base_dir}/{self.symbol.lower()}"
+
+class CRS(System):
+
+    def __init__(self, base_dir):
+        super().__init__(base_dir)
+        self.name = "Credit Risk System"
+        self.symbol = "CRS"
+        self.base_dir = f"{super().base_dir}/{self.symbol.lower()}"
 
 class FileChecker:
     def __init__(self, base_dir, business_date):
@@ -69,12 +136,28 @@ class FileChecker:
         print(f"# of Output files in TBA: {self.output_files_tba}")
 
 
+# global variables that are changeable
+dotenv.load_dotenv()
+IS_DEVELOPMENT = os.getenv("IS_DEVELOPMENT")
+SYS_NECESSARY_FILES = {
+    "crs": {},
+    "pma": {},
+    "tba": {}
+}
+base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
+
+# Banksim
+# System
+
+
+
+
+
+
 def get_trade_counts(date):
 
-    conn_str = (
-        "mssql+pyodbc://banksimdb02:CAVABIENALLEZLA!4@banksim.database.windows.net/opscodb"
-        "?driver=ODBC+Driver+17+for+SQL+Server"
-    )
+    # Create a .env and make a variable named DB_CONN_STR that contains the login info
+    conn_str = os.getenv("DB_CONN_STR")
 
     datetime_obj = datetime.strptime(date, "%Y%m%d")
     res = datetime_obj.strftime("%Y-%m-%d")
@@ -136,6 +219,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("business_date")
     args = parser.parse_args()
+
+    banksim = Banksim(args.business_date)
 
     checker = FileChecker(base_dir, args.business_date)
 

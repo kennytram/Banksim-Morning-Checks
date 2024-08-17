@@ -1,6 +1,7 @@
 import os
 import zipfile
 
+
 def get_file_paths(directory):
     file_paths = []
     for root, directories, files in os.walk(directory):
@@ -9,11 +10,13 @@ def get_file_paths(directory):
             file_paths.append(filepath)
     return file_paths
 
+
 def zip_files(file_paths, zip_name):
-    with zipfile.ZipFile(zip_name, 'w') as zip:
+    with zipfile.ZipFile(zip_name, "w") as zip:
         for file_path in file_paths:
             zip.write(file_path)
 
-directory = './blobmount'
+
+directory = "./blobmount"
 file_paths = get_file_paths(directory)
-zip_files(file_paths, 'blobmount.zip')
+zip_files(file_paths, "blobmount.zip")

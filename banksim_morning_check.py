@@ -12,6 +12,7 @@ dotenv.load_dotenv()
 IS_DEVELOPMENT = os.getenv("IS_DEVELOPMENT")
 base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
 
+
 class FileChecker:
     def __init__(self, base_dir, business_date):
         self.base_dir = base_dir
@@ -22,6 +23,7 @@ class FileChecker:
         self.dir_input_crs = os.path.join(base_dir, "crs", "data", "input")
         self.dir_input_pma = os.path.join(base_dir, "pma", "data", "input")
         self.dir_input_tba = os.path.join(base_dir, "tba", "data", "input")
+        self.dir_output_crs = os.path.join(base_dir, "crs", "data", "output")
         self.dir_output_pma = os.path.join(base_dir, "pma", "data", "output")
         self.dir_output_tba = os.path.join(base_dir, "tba", "data", "output")
 
@@ -47,6 +49,9 @@ class FileChecker:
         )
 
         # Count output files
+        self.output_files_crs = len(
+            glob.glob(os.path.join(self.dir_output_crs, f"*{self.business_date}*.xls"))
+        )
         self.output_files_pma = len(
             glob.glob(os.path.join(self.dir_output_pma, f"*{self.business_date}*.csv"))
         )
@@ -59,12 +64,13 @@ class FileChecker:
         print(f"# of Input files in CRS: {self.input_files_crs}")
         print(f"# of Input files in PMA: {self.input_files_pma}")
         print(f"# of Input files in TBA: {self.input_files_tba}")
+        print(f"# of Output files in CRS: {self.output_files_crs}")
         print(f"# of Output files in PMA: {self.output_files_pma}")
         print(f"# of Output files in TBA: {self.output_files_tba}")
-    
+
+
 def get_trade_counts(date):
 
-    
     conn_str = (
         "mssql+pyodbc://banksimdb02:CAVABIENALLEZLA!4@banksim.database.windows.net/opscodb"
         "?driver=ODBC+Driver+17+for+SQL+Server"

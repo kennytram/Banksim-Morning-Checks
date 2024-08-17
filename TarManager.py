@@ -37,3 +37,6 @@ class TarManager:
             self.source_dirs.remove(dir)
         except ValueError:
             pass
+    
+    def set_dest_dir(self, dest_dir: str) -> None:
+        self.dest_dir = dest_dir

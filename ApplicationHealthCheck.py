@@ -1,4 +1,4 @@
-import ZipManager
+import TarManager
 import FileChecker
 
 
@@ -9,7 +9,7 @@ class ApplicationHealthCheck:
         self.logs_dir = f"{base_dir}/banksimlogs"
         self.file_checker = FileChecker()
         self.data = dict()
-        self.zip_manager = ZipManager()
+        self.zip_manager = TarManager()
 
     def archive(self):
         self.zip_manager.archive([], [])

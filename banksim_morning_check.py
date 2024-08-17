@@ -25,7 +25,7 @@
 """
 
 import FileChecker
-import ZipManager
+import TarManager
 from ApplicationHealthCheck import *
 import DatabaseManager
 

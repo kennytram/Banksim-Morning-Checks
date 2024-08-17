@@ -1,4 +1,4 @@
-'''
+"""
 # Original Checks
 # File Metrics : Total Input, Ouput and Log files
 # Reconciliation : Compare trades received ( in input ) VS trades loaded ( in DB )
@@ -22,7 +22,8 @@
 # Using the database, check the trades input between tba, pma and crs. Only consider all types of trades between tba and pma. Consider only repo and loan between pma and crs.
 # Alerts :
 # Based on the table below setup alerts for each check
-'''
+"""
+
 import os
 import glob
 import argparse
@@ -31,30 +32,29 @@ from sqlalchemy import create_engine
 from datetime import datetime
 import dotenv
 
+
 class Banksim:
 
     def __init__(self, dir):
-        self.__systems = {
-            "tba" : TBA(dir),
-            "pma" : PMA(dir),
-            "crs" : CRS(dir)
-        }
+        self.__systems = {"tba": TBA(dir), "pma": PMA(dir), "crs": CRS(dir)}
         self.__dir = dir
-    
+
     def tba(self):
         return self.__systems["tba"]
-    
+
     def pma(self):
         return self.__systems["pma"]
-    
+
     def crs(self):
         return self.__systems["crs"]
+
 
 class System:
 
     def __init__(self, base_dir):
         self.base_dir = base_dir
         self.logs_dir = f"{base_dir}/banksimlogs"
+
 
 class TBA(System):
 
@@ -64,6 +64,7 @@ class TBA(System):
         self.symbol = "TBA"
         self.base_dir = f"{super().base_dir}/{self.symbol.lower()}"
 
+
 class PMA(System):
 
     def __init__(self, base_dir):
@@ -72,6 +73,7 @@ class PMA(System):
         self.symbol = "PMA"
         self.base_dir = f"{super().base_dir}/{self.symbol.lower()}"
 
+
 class CRS(System):
 
     def __init__(self, base_dir):
@@ -79,6 +81,7 @@ class CRS(System):
         self.name = "Credit Risk System"
         self.symbol = "CRS"
         self.base_dir = f"{super().base_dir}/{self.symbol.lower()}"
+
 
 class FileChecker:
     def __init__(self, base_dir, business_date):
@@ -139,19 +142,11 @@ class FileChecker:
 # global variables that are changeable
 dotenv.load_dotenv()
 IS_DEVELOPMENT = os.getenv("IS_DEVELOPMENT")
-SYS_NECESSARY_FILES = {
-    "crs": {},
-    "pma": {},
-    "tba": {}
-}
+SYS_NECESSARY_FILES = {"crs": {}, "pma": {}, "tba": {}}
 base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
 
 # Banksim
 # System
-
-
-
-
 
 
 def get_trade_counts(date):

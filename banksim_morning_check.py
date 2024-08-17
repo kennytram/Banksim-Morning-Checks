@@ -50,7 +50,7 @@ class FileChecker:
 
         # Count output files
         self.output_files_crs = len(
-            glob.glob(os.path.join(self.dir_output_crs, f"*{self.business_date}*.xls"))
+            glob.glob(os.path.join(self.dir_output_crs, "risk_dataset.xls"))
         )
         self.output_files_pma = len(
             glob.glob(os.path.join(self.dir_output_pma, f"*{self.business_date}*.csv"))

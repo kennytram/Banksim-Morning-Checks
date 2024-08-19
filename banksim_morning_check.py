@@ -42,9 +42,10 @@ import holidays
 
 us_holidays = holidays.US()
 
+
 def holiday_check(business_date):
     if isinstance(business_date, str):
-        business_date = datetime.strptime(business_date, '%Y%m%d').date()
+        business_date = datetime.strptime(business_date, "%Y%m%d").date()
     if business_date.weekday() >= 5:  # Saturday = 5, Sunday = 6
         print(f"{business_date} is a weekend.")
         return True  # Return to indicate it's a weekend
@@ -130,29 +131,29 @@ if __name__ == "__main__":
     if not holiday_check(args.business_date):
         banksim = Banksim(base_dir, args.business_date)
 
-    # # Gather Files
-    # banksim.tba.count_files()
-    # banksim.pma.count_files()
-    # banksim.crs.count_files()
+        # # Gather Files
+        # banksim.tba.count_files()
+        # banksim.pma.count_files()
+        # banksim.crs.count_files()
 
-    # # Count Number of Files
-    # print(banksim.tba.count_data)
-    # print(banksim.pma.count_data)
-    # print(banksim.crs.count_data)
+        # # Count Number of Files
+        # print(banksim.tba.count_data)
+        # print(banksim.pma.count_data)
+        # print(banksim.crs.count_data)
 
-    # # Archive # works on linux
-    # banksim.tba.archive()
-    # print(banksim.tba.archive_data)
+        # # Archive # works on linux
+        # banksim.tba.archive()
+        # print(banksim.tba.archive_data)
 
-    # Find errors
-    # banksim.tba.find_errors()
-    # print(banksim.tba.error_data)
+        # Find errors
+        # banksim.tba.find_errors()
+        # print(banksim.tba.error_data)
 
-    # # Find # of log files by category
-    # print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "load*.log"))
-    # print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "eod_extract*.log"))
+        # # Find # of log files by category
+        # print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "load*.log"))
+        # print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "eod_extract*.log"))
 
-    # Find missing files
+        # Find missing files
         print(banksim.crs.find_missing_files())
 
         # Calculate trades

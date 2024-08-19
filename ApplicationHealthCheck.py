@@ -121,7 +121,6 @@ class TBAHealthCheck(ApplicationHealthCheck):
         self.set_dirs()
         self.gather_files()
 
-
         self.data_patterns = {
             "general": f"{self.dirs['input']}/*_trades_{self.business_date}_*",
             "loan": f"{self.dirs['input']}/*_loantrades_{self.business_date}_*",
@@ -138,8 +137,11 @@ class TBAHealthCheck(ApplicationHealthCheck):
         for key, pattern in self.data_patterns.items():
             count_no_header = self.file_checker.count_csv_rows_matching_files(pattern)
             self.trade_data[key] = count_no_header
-        self.trade_data["total"] = self.trade_data["loan"] + self.trade_data["repo"] + self.trade_data["general"]
-
+        self.trade_data["total"] = (
+            self.trade_data["loan"]
+            + self.trade_data["repo"]
+            + self.trade_data["general"]
+        )
 
     # def calculate_trades(self) -> int:
     #     self.trade_data["general"] = self.file_checker.count_csv_rows(self.input_data_dirs["general"])
@@ -194,7 +196,11 @@ class PMAHealthCheck(ApplicationHealthCheck):
         for key, pattern in self.data_patterns.items():
             count_no_header = self.file_checker.count_csv_rows_matching_files(pattern)
             self.trade_data[key] = count_no_header
-        self.trade_data["total"] = self.trade_data["loan"] + self.trade_data["repo"] + self.trade_data["general"]
+        self.trade_data["total"] = (
+            self.trade_data["loan"]
+            + self.trade_data["repo"]
+            + self.trade_data["general"]
+        )
 
 
 class CRSHealthCheck(ApplicationHealthCheck):
@@ -249,11 +255,14 @@ class CRSHealthCheck(ApplicationHealthCheck):
 
     def calculate_received(self):
         last_column_idx = -1
-        date_obj = datetime.strptime(self.business_date, '%Y%m%d')
-        formatted_date = date_obj.strftime('%Y-%m-%d')
+        date_obj = datetime.strptime(self.business_date, "%Y%m%d")
+        formatted_date = date_obj.strftime("%Y-%m-%d")
 
         for key, pattern in self.data_patterns.items():
-            count_no_header = self.file_checker.count_csv_rows_matching_files_matching_columns(pattern, formatted_date, last_column_idx)
+            count_no_header = (
+                self.file_checker.count_csv_rows_matching_files_matching_columns(
+                    pattern, formatted_date, last_column_idx
+                )
+            )
             self.trade_data[key] = count_no_header
         self.trade_data["total"] = self.trade_data["loan"] + self.trade_data["repo"]
-        

@@ -42,7 +42,7 @@ import holidays
 
 us_holidays = holidays.US()
 
-
+#Brandon
 def holiday_check(business_date):
     if isinstance(business_date, str):
         business_date = datetime.strptime(business_date, "%Y%m%d").date()
@@ -119,6 +119,32 @@ class Banksim:
             print(self.crs.trade_data)
             print("red alert")
 
+    def trade_chain_reconciliation(self) -> None:
+        data = self.db_manager.get_trade_counts()
+        print(data)
+
+        if data["tba_trades"] == data["pma_trades"]:
+            print("TBA and PMA trades are equal")
+            print(data["tba_trades"], data["pma_trades"])
+        else:
+            print("red alert, TBA and PMA trades are not equal.")
+        if data["tba_loantrades"] == data["pma_loantrades"]:
+            print("TBA and PMA loan trades are equal")
+        else:
+            print("red alert, TBA and PMA loan trades are not equal.")
+        if data["tba_repotrades"] == data["pma_repotrades"]:
+            print("TBA and PMA repo trades are equal")
+        else:
+            print("red alert, TBA and PMA repo trades are not equal.")
+        if data["pma_loantrades"] == data["crs_loantrades"]:
+            print("PMA and CRS loan trades are equal")
+        else:
+            print("red alert, PMA and CRS loan trades are not equal.")
+        if data["pma_repotrades"] == data["crs_repotrades"]:
+            print("PMA and CRS repo trades are equal")
+        else:
+            print("red alert, PMA and CRS repo trades are not equal.")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -166,3 +192,4 @@ if __name__ == "__main__":
 
         # checker.print_counts()
         banksim.get_trade_counts()
+        banksim.trade_chain_reconciliation()

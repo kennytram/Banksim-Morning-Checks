@@ -48,21 +48,24 @@ base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
 
 class Banksim:
 
-    def __init__(self, dir: str, business_dates: list) -> None:
+    def __init__(self, dir: str, business_date: str) -> None:
         self.__systems = {
-            "tba": TBAHealthCheck(dir),
-            "pma": PMAHealthCheck(dir),
-            "crs": CRSHealthCheck(dir),
+            "tba": TBAHealthCheck(dir, business_date),
+            "pma": PMAHealthCheck(dir, business_date),
+            "crs": CRSHealthCheck(dir, business_date),
         }
-        self.business_dates = business_dates
-        self.db_manager = DatabaseManager()
+        self.business_date = business_date
+        # self.db_manager = DatabaseManager()
 
+    @property
     def tba(self) -> ApplicationHealthCheck:
         return self.__systems["tba"]
-
+    
+    @property
     def pma(self) -> ApplicationHealthCheck:
         return self.__systems["pma"]
-
+    
+    @property
     def crs(self) -> ApplicationHealthCheck:
         return self.__systems["crs"]
 
@@ -72,15 +75,39 @@ if __name__ == "__main__":
     parser.add_argument(
         "business_date",
         type=str,
-        nargs="+",
-        help="One or more business dates in YYYYMMDD format",
+        help="Business date in YYYYMMDD format",
     )
     args = parser.parse_args()
 
-    banksim = Banksim(args.business_date)
+    banksim = Banksim(base_dir, args.business_date)
 
-    checker = FileChecker(base_dir, args.business_date)
+    # Gather Files
+    banksim.tba.count_files()
+    banksim.pma.count_files()
+    banksim.crs.count_files()
 
-    checker.print_counts()
-    dbm = DatabaseManager(base_dir)
-    dbm.get_trade_counts(args.business_date)
+    # Count Number of Files
+    print(banksim.tba.count_data)
+    print(banksim.pma.count_data)
+    print(banksim.crs.count_data)
+
+    # # Archive # works on linux
+    # banksim.tba.archive()
+    # print(banksim.tba.archive_data)
+
+    # Find errors
+    # banksim.tba.find_errors()
+    # print(banksim.tba.error_data)
+
+    # Find # of log files by category
+    print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "load*.log"))
+    print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "eod_extract*.log"))
+
+    # Find missing files
+    print(banksim.crs.find_missing_files())
+
+    # checker = FileChecker(base_dir, args.business_date)
+
+    # checker.print_counts()
+    # dbm = DatabaseManager(base_dir)
+    # dbm.get_trade_counts(args.business_date)

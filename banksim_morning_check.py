@@ -44,7 +44,7 @@ import holidays
 us_holidays = holidays.US()
 
 # Print all the holidays in US in year 2018
-for ptr in holidays.US(years = 2024).items():
+for ptr in holidays.US(years=2024).items():
     print(ptr)
 
 # global variables that are changeable

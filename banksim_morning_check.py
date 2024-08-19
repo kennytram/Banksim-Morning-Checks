@@ -134,7 +134,6 @@ class Banksim:
             print("PMA and CRS repo trades are not equal")
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(

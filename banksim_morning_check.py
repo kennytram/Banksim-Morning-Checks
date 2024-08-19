@@ -40,12 +40,16 @@ import dotenv
 from datetime import date
 import holidays
 
-# Select country
 us_holidays = holidays.US()
 
-# Print all the holidays in US in year 2018
-for ptr in holidays.US(years = 2024).items():
-    print(ptr)
+def holiday_check(business_date):
+    if business_date in us_holidays:
+        print(f"{business_date} is a holiday: {us_holidays[business_date]}")
+        return True  # Return to indicate it's a holiday
+    else:
+        print(f"{business_date} is a business date.")
+        return False  # Return to indicate it's not a holiday
+
 
 # global variables that are changeable
 dotenv.load_dotenv()
@@ -118,8 +122,8 @@ if __name__ == "__main__":
         help="Business date in YYYYMMDD format",
     )
     args = parser.parse_args()
-
-    banksim = Banksim(base_dir, args.business_date)
+    if not holiday_check(args.business_date):
+        banksim = Banksim(base_dir, args.business_date)
 
     # # Gather Files
     # banksim.tba.count_files()
@@ -144,15 +148,15 @@ if __name__ == "__main__":
     # print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "eod_extract*.log"))
 
     # Find missing files
-    print(banksim.crs.find_missing_files())
+        print(banksim.crs.find_missing_files())
 
-    # Calculate trades
-    # banksim.tba.
-    print(banksim.tba.trade_data)
-    print(banksim.pma.trade_data)
-    print(banksim.crs.trade_data)
+        # Calculate trades
+        # banksim.tba.
+        print(banksim.tba.trade_data)
+        print(banksim.pma.trade_data)
+        print(banksim.crs.trade_data)
 
-    # checker = FileChecker(base_dir, args.business_date)
+        # checker = FileChecker(base_dir, args.business_date)
 
-    # checker.print_counts()
-    banksim.get_trade_counts()
+        # checker.print_counts()
+        banksim.get_trade_counts()

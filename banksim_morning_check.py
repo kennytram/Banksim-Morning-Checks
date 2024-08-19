@@ -27,7 +27,7 @@
 import FileChecker
 import TarManager
 from ApplicationHealthCheck import *
-import DatabaseManager
+from DatabaseManager import *
 
 import os
 import glob
@@ -55,7 +55,7 @@ class Banksim:
             "crs": CRSHealthCheck(dir, business_date),
         }
         self.business_date = business_date
-        # self.db_manager = DatabaseManager()
+        self.db_manager = DatabaseManager(base_dir)
 
     @property
     def tba(self) -> ApplicationHealthCheck:
@@ -68,6 +68,32 @@ class Banksim:
     @property
     def crs(self) -> ApplicationHealthCheck:
         return self.__systems["crs"]
+    
+    def get_trade_counts(self) -> None:
+        data = self.db_manager.get_trade_counts()
+        morning_check_status = {
+            
+        }
+        print(data)
+
+        if data["tba_trades"] + data["tba_loantrades"] + data["tba_repotrades"] == self.tba.trade_data["total"]:
+            print("TBA are equal")
+        else:
+            print(self.tba.trade_data)
+            print("red alert")
+
+        if data["pma_trades"] + data["pma_loantrades"] + data["pma_repotrades"] == self.pma.trade_data["total"]:
+            print("PMA are equal")
+        else:
+            print(self.pma.trade_data)
+            print("red alert")
+
+        if data["crs_loantrades"] + data["crs_repotrades"] == self.crs.trade_data["total"]:
+            print("CRS are equal")
+        else:
+            print(self.crs.trade_data)
+            print("red alert")
+
 
 
 if __name__ == "__main__":
@@ -81,15 +107,15 @@ if __name__ == "__main__":
 
     banksim = Banksim(base_dir, args.business_date)
 
-    # Gather Files
-    banksim.tba.count_files()
-    banksim.pma.count_files()
-    banksim.crs.count_files()
+    # # Gather Files
+    # banksim.tba.count_files()
+    # banksim.pma.count_files()
+    # banksim.crs.count_files()
 
-    # Count Number of Files
-    print(banksim.tba.count_data)
-    print(banksim.pma.count_data)
-    print(banksim.crs.count_data)
+    # # Count Number of Files
+    # print(banksim.tba.count_data)
+    # print(banksim.pma.count_data)
+    # print(banksim.crs.count_data)
 
     # # Archive # works on linux
     # banksim.tba.archive()
@@ -99,21 +125,21 @@ if __name__ == "__main__":
     # banksim.tba.find_errors()
     # print(banksim.tba.error_data)
 
-    # Find # of log files by category
-    print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "load*.log"))
-    print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "eod_extract*.log"))
+    # # Find # of log files by category
+    # print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "load*.log"))
+    # print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "eod_extract*.log"))
 
     # Find missing files
     print(banksim.crs.find_missing_files())
 
     # Calculate trades
     # banksim.tba.
-    # print(banksim.tba.trade_data)
-    # print(banksim.pma.trade_data)
+    print(banksim.tba.trade_data)
+    print(banksim.pma.trade_data)
     print(banksim.crs.trade_data)
 
     # checker = FileChecker(base_dir, args.business_date)
 
     # checker.print_counts()
-    # dbm = DatabaseManager(base_dir)
-    # dbm.get_trade_counts(args.business_date)
+    dbm = DatabaseManager(base_dir)
+    dbm.get_trade_counts(args.business_date)

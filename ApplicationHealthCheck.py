@@ -182,6 +182,7 @@ class PMAHealthCheck(ApplicationHealthCheck):
         self.gather_files()
 
         self.data_patterns = {
+            "general": f"{self.dirs["input"]}/eod_trades_*{self.business_date}*",
             "loan": f"{self.dirs["input"]}/eod_loan_trades_*{self.business_date}*",
             "repo": f"{self.dirs["input"]}/eod_repo_trades_*{self.business_date}*",
         }
@@ -193,7 +194,7 @@ class PMAHealthCheck(ApplicationHealthCheck):
         for key, pattern in self.data_patterns.items():
             count_no_header = self.file_checker.count_csv_rows_matching_files(pattern)
             self.trade_data[key] = count_no_header
-        self.trade_data["total"] = self.trade_data["loan"] + self.trade_data["repo"]
+        self.trade_data["total"] = self.trade_data["loan"] + self.trade_data["repo"] + self.trade_data["general"]
 
 
 class CRSHealthCheck(ApplicationHealthCheck):

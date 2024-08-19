@@ -55,7 +55,7 @@ class Banksim:
             "crs": CRSHealthCheck(dir, business_date),
         }
         self.business_date = business_date
-        self.db_manager = DatabaseManager(base_dir)
+        self.db_manager = DatabaseManager(base_dir, business_date)
 
     @property
     def tba(self) -> ApplicationHealthCheck:
@@ -141,5 +141,4 @@ if __name__ == "__main__":
     # checker = FileChecker(base_dir, args.business_date)
 
     # checker.print_counts()
-    dbm = DatabaseManager(base_dir)
-    dbm.get_trade_counts(args.business_date)
+    banksim.get_trade_counts()

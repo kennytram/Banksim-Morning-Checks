@@ -96,54 +96,42 @@ class Banksim:
             data["tba_trades"] + data["tba_loantrades"] + data["tba_repotrades"]
             == self.tba.trade_data["total"]
         ):
-            print("TBA are equal")
+            print("TBA are equal between input and database")
         else:
             print(self.tba.trade_data)
-            print("red alert")
+            print("TBA are not equal between input and database")
 
         if (
             data["pma_trades"] + data["pma_loantrades"] + data["pma_repotrades"]
             == self.pma.trade_data["total"]
         ):
-            print("PMA are equal")
+            print("PMA are equal between input and database")
         else:
             print(self.pma.trade_data)
-            print("red alert")
+            print("PMA are not equal between input and database")
 
         if (
             data["crs_loantrades"] + data["crs_repotrades"]
             == self.crs.trade_data["total"]
         ):
-            print("CRS are equal")
+            print("CRS are equal between input and database")
         else:
             print(self.crs.trade_data)
-            print("red alert")
+            print("CRS are not equal between input and database")
 
     def trade_chain_reconciliation(self) -> None:
         data = self.db_manager.get_trade_counts()
-        print(data)
+        if data["tba_trades"] != data["pma_trades"]:
+            print("TBA and PMA trades are not equal")
+        if data["tba_loantrades"] != data["pma_loantrades"]:
+            print("TBA and PMA loan trades are not equal")
+        if data["tba_repotrades"] != data["pma_repotrades"]:
+            print("TBA and PMA repo trades are not equal")
+        if data["pma_loantrades"] != data["crs_loantrades"]:
+            print("PMA and CRS loan trades are not equal")
+        if data["pma_repotrades"] != data["crs_repotrades"]:
+            print("PMA and CRS repo trades are not equal")
 
-        if data["tba_trades"] == data["pma_trades"]:
-            print("TBA and PMA trades are equal")
-            print(data["tba_trades"], data["pma_trades"])
-        else:
-            print("red alert, TBA and PMA trades are not equal.")
-        if data["tba_loantrades"] == data["pma_loantrades"]:
-            print("TBA and PMA loan trades are equal")
-        else:
-            print("red alert, TBA and PMA loan trades are not equal.")
-        if data["tba_repotrades"] == data["pma_repotrades"]:
-            print("TBA and PMA repo trades are equal")
-        else:
-            print("red alert, TBA and PMA repo trades are not equal.")
-        if data["pma_loantrades"] == data["crs_loantrades"]:
-            print("PMA and CRS loan trades are equal")
-        else:
-            print("red alert, PMA and CRS loan trades are not equal.")
-        if data["pma_repotrades"] == data["crs_repotrades"]:
-            print("PMA and CRS repo trades are equal")
-        else:
-            print("red alert, PMA and CRS repo trades are not equal.")
 
 
 if __name__ == "__main__":

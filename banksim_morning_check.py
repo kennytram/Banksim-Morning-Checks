@@ -42,20 +42,19 @@ import holidays
 
 us_holidays = holidays.US()
 
-<<<<<<< HEAD
 def holiday_check(business_date):
-    if business_date in us_holidays:
+    if isinstance(business_date, str):
+        business_date = datetime.strptime(business_date, '%Y%m%d').date()
+    if business_date.weekday() >= 5:  # Saturday = 5, Sunday = 6
+        print(f"{business_date} is a weekend.")
+        return True  # Return to indicate it's a weekend
+    elif business_date in us_holidays:
         print(f"{business_date} is a holiday: {us_holidays[business_date]}")
         return True  # Return to indicate it's a holiday
     else:
         print(f"{business_date} is a business date.")
         return False  # Return to indicate it's not a holiday
 
-=======
-# Print all the holidays in US in year 2018
-for ptr in holidays.US(years=2024).items():
-    print(ptr)
->>>>>>> e7201a0614dde212a2a0cb4fb9705654b20fc191
 
 # global variables that are changeable
 dotenv.load_dotenv()

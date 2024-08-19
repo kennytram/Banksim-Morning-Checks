@@ -42,7 +42,8 @@ import holidays
 
 us_holidays = holidays.US()
 
-#Brandon
+
+# Brandon
 def holiday_check(business_date):
     if isinstance(business_date, str):
         business_date = datetime.strptime(business_date, "%Y%m%d").date()

@@ -106,6 +106,12 @@ if __name__ == "__main__":
     # Find missing files
     print(banksim.crs.find_missing_files())
 
+    # Calculate trades
+    # banksim.tba.
+    # print(banksim.tba.trade_data)
+    # print(banksim.pma.trade_data)
+    print(banksim.crs.trade_data)
+
     # checker = FileChecker(base_dir, args.business_date)
 
     # checker.print_counts()

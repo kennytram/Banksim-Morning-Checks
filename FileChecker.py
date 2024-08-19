@@ -51,32 +51,34 @@ class FileChecker:
                             found_pharses[file_path].append(next_word)
 
         return dict(found_pharses)
-    
+
     def count_csv_rows(file_path: str) -> int:
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             data = csv.reader(file)
             data_rows = sum(1 for _ in data) - 1
-        
+
         return data_rows
-    
+
     def count_csv_rows_matching_files(self, pattern: str) -> int:
         matching_files = glob.glob(pattern)
 
         total_lines = 0
         for file_path in matching_files:
             if os.path.isfile(file_path):
-                with open(file_path, 'r') as file:
+                with open(file_path, "r") as file:
                     total_lines += sum(1 for _ in file) - 1
 
         return total_lines
-    
-    def count_csv_rows_matching_files_matching_columns(self, file_pattern: str, column_pattern: str, column_idx: int) -> int:
+
+    def count_csv_rows_matching_files_matching_columns(
+        self, file_pattern: str, column_pattern: str, column_idx: int
+    ) -> int:
         matching_files = glob.glob(file_pattern)
-        
+
         total_lines = 0
         for file_path in matching_files:
             if os.path.isfile(file_path):
-                with open(file_path, 'r') as file:
+                with open(file_path, "r") as file:
                     reader = csv.reader(file)
                     for row in reader:
                         if row and row[column_idx] == column_pattern:

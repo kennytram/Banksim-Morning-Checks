@@ -45,14 +45,14 @@ class DatabaseManager:
         df_crs_repo = pd.read_sql(crs_repo_query, self.engine).iloc[0, 0]
 
         data = {
-            'tba_trades': df_trade,
-            'tba_loantrades': df_tradeloans,
-            'tba_repotrades': df_traderepo,
-            'pma_trades': df_pma_trades,
-            'pma_loantrades': df_pma_loan_trades,
-            'pma_repotrades': df_pma_repo_trades,
-            'crs_loantrades': df_crs_loan,
-            'crs_repotrades': df_crs_repo
+            "tba_trades": df_trade,
+            "tba_loantrades": df_tradeloans,
+            "tba_repotrades": df_traderepo,
+            "pma_trades": df_pma_trades,
+            "pma_loantrades": df_pma_loan_trades,
+            "pma_repotrades": df_pma_repo_trades,
+            "crs_loantrades": df_crs_loan,
+            "crs_repotrades": df_crs_repo,
         }
 
         return data

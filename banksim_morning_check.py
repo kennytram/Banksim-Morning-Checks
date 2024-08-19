@@ -60,11 +60,11 @@ class Banksim:
     @property
     def tba(self) -> ApplicationHealthCheck:
         return self.__systems["tba"]
-    
+
     @property
     def pma(self) -> ApplicationHealthCheck:
         return self.__systems["pma"]
-    
+
     @property
     def crs(self) -> ApplicationHealthCheck:
         return self.__systems["crs"]

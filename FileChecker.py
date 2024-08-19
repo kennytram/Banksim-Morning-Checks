@@ -2,6 +2,7 @@ import os
 import glob
 import csv
 
+
 class FileChecker:
 
     def __init__(self, base_dir: str = "./"):

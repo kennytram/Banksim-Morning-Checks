@@ -123,9 +123,9 @@ class TBAHealthCheck(ApplicationHealthCheck):
 
 
         self.data_patterns = {
-            "general": f"{self.dirs["input"]}/*_trades_{self.business_date}_*",
-            "loan": f"{self.dirs["input"]}/*_loantrades_{self.business_date}_*",
-            "repo": f"{self.dirs["input"]}/*_repotrades_{self.business_date}_*",
+            "general": f"{self.dirs['input']}/*_trades_{self.business_date}_*",
+            "loan": f"{self.dirs['input']}/*_loantrades_{self.business_date}_*",
+            "repo": f"{self.dirs['input']}/*_repotrades_{self.business_date}_*",
         }
         self.trade_data = dict()
         self.calculate_received()
@@ -182,9 +182,9 @@ class PMAHealthCheck(ApplicationHealthCheck):
         self.gather_files()
 
         self.data_patterns = {
-            "general": f"{self.dirs["input"]}/eod_trades_*{self.business_date}*",
-            "loan": f"{self.dirs["input"]}/eod_loan_trades_*{self.business_date}*",
-            "repo": f"{self.dirs["input"]}/eod_repo_trades_*{self.business_date}*",
+            "general": f"{self.dirs['input']}/eod_trades_*{self.business_date}*",
+            "loan": f"{self.dirs['input']}/eod_loan_trades_*{self.business_date}*",
+            "repo": f"{self.dirs['input']}/eod_repo_trades_*{self.business_date}*",
         }
 
         self.trade_data = dict()
@@ -240,8 +240,8 @@ class CRSHealthCheck(ApplicationHealthCheck):
         #     "stock": f"stock_data_${self.business_date}",
         # }
         self.data_patterns = {
-            "loan": f"{self.dirs["input"]}/backoffice_loans_{self.business_date}.csv",
-            "repo": f"{self.dirs["input"]}/backoffice_repo_{self.business_date}.csv",
+            "loan": f"{self.dirs['input']}/backoffice_loans_{self.business_date}.csv",
+            "repo": f"{self.dirs['input']}/backoffice_repo_{self.business_date}.csv",
         }
 
         self.trade_data = dict()

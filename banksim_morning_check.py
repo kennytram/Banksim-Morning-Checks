@@ -68,32 +68,38 @@ class Banksim:
     @property
     def crs(self) -> ApplicationHealthCheck:
         return self.__systems["crs"]
-    
+
     def get_trade_counts(self) -> None:
         data = self.db_manager.get_trade_counts()
-        morning_check_status = {
-            
-        }
+        morning_check_status = {}
         print(data)
 
-        if data["tba_trades"] + data["tba_loantrades"] + data["tba_repotrades"] == self.tba.trade_data["total"]:
+        if (
+            data["tba_trades"] + data["tba_loantrades"] + data["tba_repotrades"]
+            == self.tba.trade_data["total"]
+        ):
             print("TBA are equal")
         else:
             print(self.tba.trade_data)
             print("red alert")
 
-        if data["pma_trades"] + data["pma_loantrades"] + data["pma_repotrades"] == self.pma.trade_data["total"]:
+        if (
+            data["pma_trades"] + data["pma_loantrades"] + data["pma_repotrades"]
+            == self.pma.trade_data["total"]
+        ):
             print("PMA are equal")
         else:
             print(self.pma.trade_data)
             print("red alert")
 
-        if data["crs_loantrades"] + data["crs_repotrades"] == self.crs.trade_data["total"]:
+        if (
+            data["crs_loantrades"] + data["crs_repotrades"]
+            == self.crs.trade_data["total"]
+        ):
             print("CRS are equal")
         else:
             print(self.crs.trade_data)
             print("red alert")
-
 
 
 if __name__ == "__main__":

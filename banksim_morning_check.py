@@ -60,11 +60,11 @@ class Banksim:
     @property
     def tba(self) -> ApplicationHealthCheck:
         return self.__systems["tba"]
-    
+
     @property
     def pma(self) -> ApplicationHealthCheck:
         return self.__systems["pma"]
-    
+
     @property
     def crs(self) -> ApplicationHealthCheck:
         return self.__systems["crs"]
@@ -101,7 +101,11 @@ if __name__ == "__main__":
 
     # Find # of log files by category
     print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "load*.log"))
-    print(banksim.pma.file_checker.get_num_files(banksim.pma.dirs["logs"], "eod_extract*.log"))
+    print(
+        banksim.pma.file_checker.get_num_files(
+            banksim.pma.dirs["logs"], "eod_extract*.log"
+        )
+    )
 
     # Find missing files
     print(banksim.crs.find_missing_files())

@@ -25,7 +25,7 @@ def holiday_check(business_date):
         print(f"{business_date} is a holiday: {us_holidays[business_date]}")
         return True  # Return to indicate it's a holiday
     else:
-        print(f"{business_date} is a business date.")
+        # print(f"{business_date} is a business date.")
         return False  # Return to indicate it's not a holiday
 
 
@@ -338,11 +338,11 @@ if __name__ == "__main__":
         print(
             "=================================================================================================="
         )
-        # banksim.trade_chain_reconciliation()
+        banksim.trade_chain_reconciliation()
 
         print("\n")
         print("Alert Table")
         print(
             "=================================================================================================="
         )
-        print(banksim.db_manager.get_alert_table())
+        banksim.alert()

@@ -5,7 +5,7 @@ import holidays
 import re
 
 us_holidays = holidays.US()
-TEAM_DIR = "/home/teamsupport2"
+TEAM_DIR = "/home/teamsupport2/archive"
 
 
 # Brandon

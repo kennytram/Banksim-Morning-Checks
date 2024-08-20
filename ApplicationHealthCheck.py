@@ -6,6 +6,7 @@ import holidays
 us_holidays = holidays.US()
 TEAM_DIR = "/home/teamsupport2"
 
+
 # Brandon
 def holiday_check(date):
     if isinstance(date, str):
@@ -16,14 +17,15 @@ def holiday_check(date):
         return True
     else:
         return False
-    
+
+
 def get_prev_date(date_str: str) -> str:
     date = datetime.strptime(date_str, "%Y%m%d").date()
-    temp = date - timedelta(days = 1)
+    temp = date - timedelta(days=1)
     if date.weekday() == 0:
-        temp = date - timedelta(days = 3)
+        temp = date - timedelta(days=3)
     while holiday_check(date):
-        temp = temp - timedelta(days = 1)
+        temp = temp - timedelta(days=1)
     prev_date = temp.strftime("%Y%m%d")
     return prev_date
 
@@ -125,24 +127,29 @@ class ApplicationHealthCheck:
 
         def normalize_filename(file_name, business_date):
             base_name = file_name.replace(business_date, "")
-            normalized_name = re.sub(r'\d+', '', base_name)
+            normalized_name = re.sub(r"\d+", "", base_name)
             return normalized_name
-        
-        def find_matching_files(current_files, prev_files, business_date, prev_business_date):
+
+        def find_matching_files(
+            current_files, prev_files, business_date, prev_business_date
+        ):
             current_normalized = {
                 normalize_filename(file, business_date): file for file in current_files
             }
             prev_normalized = {
-                normalize_filename(file, prev_business_date): file for file in prev_files
+                normalize_filename(file, prev_business_date): file
+                for file in prev_files
             }
 
-            common_normalized = set(current_normalized.keys()) & set(prev_normalized.keys())
+            common_normalized = set(current_normalized.keys()) & set(
+                prev_normalized.keys()
+            )
 
             matching_files = [
-                (current_normalized[name], prev_normalized[name]) for name in common_normalized
+                (current_normalized[name], prev_normalized[name])
+                for name in common_normalized
             ]
             return matching_files
-
 
         file_anomalies = []
 
@@ -150,7 +157,9 @@ class ApplicationHealthCheck:
             for file_pattern in self.file_categories_patterns[dir_category]:
                 if self.business_date not in file_pattern:
                     break
-                prev_file = file_pattern.replace(self.business_date, self.prev_business_date)
+                prev_file = file_pattern.replace(
+                    self.business_date, self.prev_business_date
+                )
                 full_path_prev = os.path.join(self.dirs[dir_category], prev_file)
                 full_path_curr = os.path.join(self.dirs[dir_category], file_pattern)
                 try:
@@ -158,34 +167,48 @@ class ApplicationHealthCheck:
                     curr_file_size = os.path.getsize(full_path_curr)
                 except FileNotFoundError:
                     return []
-                if curr_file_size > prev_file_size * 1.2 or prev_file_size * 0.8 > curr_file_size:
+                if (
+                    curr_file_size > prev_file_size * 1.2
+                    or prev_file_size * 0.8 > curr_file_size
+                ):
                     file_anomalies.append((full_path_prev, full_path_curr))
 
-        prev_logs_dir = self.dirs["logs"].replace(self.business_date, self.prev_business_date)
+        prev_logs_dir = self.dirs["logs"].replace(
+            self.business_date, self.prev_business_date
+        )
         try:
             prev_logs_dir_files = os.listdir(prev_logs_dir)
-            prev_logs_dir_files = [os.path.join(prev_logs_dir, f) for f in prev_logs_dir_files]
+            prev_logs_dir_files = [
+                os.path.join(prev_logs_dir, f) for f in prev_logs_dir_files
+            ]
         except FileNotFoundError:
             return file_anomalies
         list_curr_dir_files = sorted(self.files["logs"])
-        
+
         matching_files = None
         if len(prev_logs_dir_files) != len(list_curr_dir_files):
             matching_files = find_matching_files[
                 list_curr_dir_files,
                 prev_logs_dir_files,
                 self.business_date,
-                self.prev_business_date
+                self.prev_business_date,
             ]
         if matching_files:
-            min_dir_files = prev_logs_dir_files if len(prev_logs_dir_files) < len(self.files["logs"]) else list_curr_dir_files
+            min_dir_files = (
+                prev_logs_dir_files
+                if len(prev_logs_dir_files) < len(self.files["logs"])
+                else list_curr_dir_files
+            )
             for idx in range(len(matching_files)):
                 try:
                     prev_file_size = os.path.getsize(min_dir_files[idx])
                     curr_file_size = os.path.getsize(matching_files[idx])
                 except FileNotFoundError:
                     return file_anomalies
-                if curr_file_size > prev_file_size * 1.2 or prev_file_size * 0.8 > curr_file_size:
+                if (
+                    curr_file_size > prev_file_size * 1.2
+                    or prev_file_size * 0.8 > curr_file_size
+                ):
                     file_anomalies.append((min_dir_files[idx], matching_files[idx]))
 
         else:
@@ -195,10 +218,16 @@ class ApplicationHealthCheck:
                     curr_file_size = os.path.getsize(list_curr_dir_files[idx])
                 except FileNotFoundError:
                     return file_anomalies
-                if curr_file_size > prev_file_size * 1.2 or prev_file_size * 0.8 > curr_file_size:
-                    file_anomalies.append((prev_logs_dir_files[idx], list_curr_dir_files[idx]))
+                if (
+                    curr_file_size > prev_file_size * 1.2
+                    or prev_file_size * 0.8 > curr_file_size
+                ):
+                    file_anomalies.append(
+                        (prev_logs_dir_files[idx], list_curr_dir_files[idx])
+                    )
 
         return file_anomalies
+
 
 class TBAHealthCheck(ApplicationHealthCheck):
 
@@ -240,6 +269,7 @@ class TBAHealthCheck(ApplicationHealthCheck):
             + self.trade_data["repo"]
             + self.trade_data["general"]
         )
+
 
 class PMAHealthCheck(ApplicationHealthCheck):
 

@@ -25,7 +25,7 @@ class DatabaseManager:
         df_morning = pd.read_sql(morning_query, self.engine)
 
         return df_morning
-    
+
     def get_alert_table(self):
         alert_query = f"SELECT * FROM dbo.Metric"
 

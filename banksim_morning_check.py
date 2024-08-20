@@ -242,7 +242,11 @@ if __name__ == "__main__":
             "=================================================================================================="
         )
         banksim.tba.archive()
-        print(banksim.tba.archive_data)
+        banksim.pma.archive()
+        banksim.crs.archive()
+        print("tba:", banksim.tba.archive_data)
+        print("pma:", banksim.pma.archive_data)
+        print("crs:", banksim.crs.archive_data)
 
         print("\n")
 

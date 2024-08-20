@@ -1,44 +1,15 @@
-"""
-# Original Checks
-# File Metrics : Total Input, Ouput and Log files
-# Reconciliation : Compare trades received ( in input ) VS trades loaded ( in DB )
-# Errors check : Include all the possible errors we can find
-# Archiving : tar.gz the logs, output and input
-# Checks added Tuesday
-# Log files : Display the number of log files by category (i.e load_market_data, load_trade )
-    - Each System should be responsible for this
-    - Can use FileChecker for this  
-# Checks added Wednesday
-# Reconciliation Log : For each extracting process, analyze log files and if an output is generated based on the log, check in the data output folder
-# New checks
-# The script should not run on a weekend or a banking holiday
-# Data Storage
-# Database : Build a database table to store the result of the morning check, including all the checks list above
-# File Size Anomaly :
-# Build a control to retrieve the number of file having a size changing by +/- 20%
-# Scope : PMA/CRS application. All files
-# Example : Size change between backoffice_repo20240610.csv and backoffice_repo20240611.csv
-# Trade Chain Reconciliation
-# Using the database, check the trades input between tba, pma and crs. Only consider all types of trades between tba and pma. Consider only repo and loan between pma and crs.
-# Alerts :
-# Based on the table below setup alerts for each check
-"""
-
-import FileChecker
-import TarManager
 from ApplicationHealthCheck import *
 from DatabaseManager import *
 
 import os
-import glob
 import argparse
 import pandas as pd
-import zipfile
 from sqlalchemy import create_engine
 from datetime import datetime
 import dotenv
 from datetime import date
 import holidays
+from collections import defaultdict
 
 us_holidays = holidays.US()
 
@@ -55,6 +26,16 @@ def holiday_check(business_date):
     else:
         print(f"{business_date} is a business date.")
         return False  # Return to indicate it's not a holiday
+    
+def get_prev_date(date_str: str) -> str:
+    date = datetime.strptime(date_str, "%Y%m%d").date()
+    temp = date - timedelta(days = 1)
+    if date.weekday() == 0:
+        temp = date - timedelta(days = 3)
+    while holiday_check(date):
+        temp = temp - timedelta(days = 1)
+    prev_date = temp.strftime("%Y%m%d")
+    return prev_date
 
 
 # global variables that are changeable
@@ -72,8 +53,16 @@ class Banksim:
             "pma": PMAHealthCheck(dir, business_date),
             "crs": CRSHealthCheck(dir, business_date),
         }
+        prev_date = get_prev_date(business_date)
+        self.__prev_date_systems = {
+            "tba": TBAHealthCheck(dir, prev_date),
+            "pma": PMAHealthCheck(dir, prev_date),
+            "crs": CRSHealthCheck(dir, prev_date),
+        }
         self.business_date = business_date
         self.db_manager = DatabaseManager(base_dir, business_date)
+        self.trade_reconciliation_alert = defaultdict()
+        self.trade_chain_reconciliation_alert = defaultdict()
 
     @property
     def tba(self) -> ApplicationHealthCheck:
@@ -91,7 +80,7 @@ class Banksim:
         data = self.db_manager.get_trade_counts()
 
         print("Database:", data)
-
+    
         if (
             data["tba_trades"] + data["tba_loantrades"] + data["tba_repotrades"]
             == self.tba.trade_data["total"]
@@ -100,6 +89,7 @@ class Banksim:
         else:
             print("tba:", self.tba.trade_data)
             print("TBA are not equal between input and database")
+            self.trade_reconciliation_alert["tba"] = "RED"
 
         if (
             data["pma_trades"] + data["pma_loantrades"] + data["pma_repotrades"]
@@ -109,6 +99,7 @@ class Banksim:
         else:
             print("pma:", self.pma.trade_data)
             print("PMA are not equal between input and database")
+            self.trade_reconciliation_alert["pma"] = "RED"
 
         if (
             data["crs_loantrades"] + data["crs_repotrades"]
@@ -118,19 +109,81 @@ class Banksim:
         else:
             print("crs:", self.crs.trade_data)
             print("CRS are not equal between input and database")
+            self.trade_reconciliation_alert["crs"] = "RED"
 
     def trade_chain_reconciliation(self) -> None:
         data = self.db_manager.get_trade_counts()
         if data["tba_trades"] != data["pma_trades"]:
             print("TBA and PMA trades are not equal")
+            self.trade_chain_reconciliation_alert["tba"] = "RED"
+            self.trade_chain_reconciliation_alert["pma"] = "RED"
         if data["tba_loantrades"] != data["pma_loantrades"]:
             print("TBA and PMA loan trades are not equal")
+            self.trade_chain_reconciliation_alert["tba"] = "RED"
+            self.trade_chain_reconciliation_alert["pma"] = "RED"
         if data["tba_repotrades"] != data["pma_repotrades"]:
             print("TBA and PMA repo trades are not equal")
+            self.trade_chain_reconciliation_alert["tba"] = "RED"
+            self.trade_chain_reconciliation_alert["pma"] = "RED"
         if data["pma_loantrades"] != data["crs_loantrades"]:
             print("PMA and CRS loan trades are not equal")
+            self.trade_chain_reconciliation_alert["pma"] = "RED"
+            self.trade_chain_reconciliation_alert["crs"] = "RED"
         if data["pma_repotrades"] != data["crs_repotrades"]:
             print("PMA and CRS repo trades are not equal")
+            self.trade_chain_reconciliation_alert["pma"] = "RED"
+            self.trade_chain_reconciliation_alert["crs"] = "RED"
+
+    def alert(self) -> None:
+        alerts = defaultdict(dict)
+        curr_count_data = defaultdict(dict)
+        prev_count_data = defaultdict(dict)
+
+        for system in ["pma", "crs"]:
+            for dir, count in self.__systems[system].count_data.items():
+                curr_count_data[system][dir] = count
+
+        for systen in ["pma", "crs"]:
+            for dir, count in self.__prev_date_systems[systen].count_data.items():
+                prev_count_data[systen][dir] = count
+        
+        # 1, 2, 3 Number of Input, Logs, Output
+        for system in ["pma", "crs"]:
+            for dir in curr_count_data[system]:
+                curr_count = curr_count_data[system].get(dir, 0)
+                prev_count = prev_count_data[system].get(dir, 0)
+
+                if curr_count != prev_count:
+                    print(f"{system}'s {dir}: Number of files mismatched")
+                    alerts[system][dir] = "RED"
+        
+        for system in self.__systems:
+            # 4 Trade Reconciliation
+            if self.trade_reconciliation_alert.get(system, False):
+                print(f"{system}'s Trade Reconciliation Alert")
+                alerts[system]["trade_reconciliation"] = "RED"
+
+            # 5 Trade Chain Reconcilation
+            if self.trade_chain_reconciliation_alert.get(system, False):
+                print(f"{system}'s Trade Chain Reconciliation Alert")
+                alerts[system]["trade_chain_reconciliation"] = "RED"
+
+            # 6 Error Check
+            if self.__systems[system].error_data.get("ERROR") or self.__systems[system].error_data.get("CRITICAL"):
+                print(f"{system}'s Error Check Alert")
+                alerts[system]["error"] = "RED"
+
+            # 7 Reconciliation Log - Output Files
+            if self.__systems[system].missing_file_data:
+                print(f"{system}'s Missing File(s) Alert")
+                alerts[system]["missing"] = "RED"
+
+            # 8 File Size Anomaly
+            if self.__systems[system].file_anomalies:
+                print(f"{system}'s File Size Anomalies Alert")
+                alerts[system]["file_anomalies"] = "RED"
+
+
 
 
 if __name__ == "__main__":
@@ -161,7 +214,7 @@ if __name__ == "__main__":
         # Calculate trades
         print("Reconciliation : Compare trades received ( in input ) VS trades loaded ( in DB )")
         print("==================================================================================================")
-        # banksim.get_trade_counts()
+        banksim.get_trade_counts()
 
         print('\n')
 
@@ -176,8 +229,8 @@ if __name__ == "__main__":
         # Archive # works on linux
         print("Archiving : tar.gz the logs, output and input")
         print("==================================================================================================")
-        # banksim.tba.archive()
-        # print(banksim.tba.archive_data)
+        banksim.tba.archive()
+        print(banksim.tba.archive_data)
 
         print('\n')
 
@@ -208,7 +261,7 @@ if __name__ == "__main__":
 
         print("Database : Build a database table to store the result of the morning check")
         print("==================================================================================================")
-        # print(banksim.db_manager.get_morning_check_table())
+        print(banksim.db_manager.get_morning_check_table())
         
         print('\n')
 
@@ -221,9 +274,10 @@ if __name__ == "__main__":
 
         print("Using the database, check the trades input between tba, pma and crs")
         print("==================================================================================================")
-        # banksim.trade_chain_reconciliation()
+        banksim.trade_chain_reconciliation()
 
         print('\n')
-        print("Alert Table")
+
+        print("Alerts")
         print("==================================================================================================")
-        print(banksim.db_manager.get_alert_table())
+        banksim.alert()

@@ -2,6 +2,7 @@ from TarManager import *
 from FileChecker import *
 from datetime import datetime, timedelta
 import holidays
+import re
 
 us_holidays = holidays.US()
 TEAM_DIR = "/home/teamsupport2"
@@ -51,6 +52,7 @@ class ApplicationHealthCheck:
         self.archive_data = dict()
         self.error_data = dict()
         self.missing_file_data = list()
+        self.file_anomalies = list()
 
         self.file_checker = FileChecker(self.base_dir)
         self.tar_manager = TarManager(TEAM_DIR)
@@ -113,6 +115,7 @@ class ApplicationHealthCheck:
                 if whole_file_name not in self.files["output"]:
                     missing_files.add(whole_file_name)
 
+        self.missing_file_data.extend(list(missing_files))
         return missing_files
 
     def calculate_received(self) -> None:
@@ -198,6 +201,7 @@ class ApplicationHealthCheck:
                 if curr_file_size > prev_file_size * 1.2 or prev_file_size * 0.8 > curr_file_size:
                     file_anomalies.append((prev_logs_dir_files[idx], list_curr_dir_files[idx]))
 
+        self.file_anomalies.extend(file_anomalies)
         return file_anomalies
 
 class TBAHealthCheck(ApplicationHealthCheck):

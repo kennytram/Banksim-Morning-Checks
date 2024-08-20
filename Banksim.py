@@ -2,6 +2,8 @@ from ApplicationHealthCheck import *
 from DatabaseManager import *
 
 from collections import defaultdict
+
+
 class Banksim:
 
     def __init__(self, dir: str, business_date: str) -> None:

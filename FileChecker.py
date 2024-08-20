@@ -9,10 +9,6 @@ class FileChecker:
         self.base_dir = base_dir
         self.file_paths = set()
 
-    def get_dir(self, *args: str) -> str:
-        dir = os.path.join(self.base_dir, *args)
-        return dir
-
     def get_files(self, dir: str, file_patterns: set) -> set:
         file_paths = set()
         for file_pattern in file_patterns:
@@ -52,13 +48,6 @@ class FileChecker:
 
         return dict(found_pharses)
 
-    def count_csv_rows(file_path: str) -> int:
-        with open(file_path, "r") as file:
-            data = csv.reader(file)
-            data_rows = sum(1 for _ in data) - 1
-
-        return data_rows
-
     def count_csv_rows_matching_files(self, pattern: str) -> int:
         matching_files = glob.glob(pattern)
 
@@ -85,63 +74,72 @@ class FileChecker:
                             total_lines += 1
         return total_lines
 
-    def get_file_size(self, file_path):
-        return
+    # def get_dir(self, *args: str) -> str:
+    #     dir = os.path.join(self.base_dir, *args)
+    #     return dir
 
-    def change_files(self, files: set) -> None:
-        self.files = files
+    # def filter_files_with_pattern(self, files: set, pattern: str) -> set:
 
-    # def __init__(self, base_dir: str, business_date):
-    #     self.base_dir = base_dir
-    #     self.business_date = business_date
+    #     matching_files = []
+    #     for file_name in files:
+    #         if pattern in file_name:
+    #             matching_files.append(file_name)
+    #     return matching_files
 
-    # def read(self):
-    #     # Directories
-    #     self.dir_banksimlogs = os.path.join(base_dir, "banksimlogs", business_date)
-    #     self.dir_input_crs = os.path.join(base_dir, "crs", "data", "input")
-    #     self.dir_input_pma = os.path.join(base_dir, "pma", "data", "input")
-    #     self.dir_input_tba = os.path.join(base_dir, "tba", "data", "input")
-    #     self.dir_output_crs = os.path.join(base_dir, "crs", "data", "output")
-    #     self.dir_output_pma = os.path.join(base_dir, "pma", "data", "output")
-    #     self.dir_output_tba = os.path.join(base_dir, "tba", "data", "output")
+    # def find_older_files(self, dir: str, date: str) -> set:
+    #     older_files = []
+    #     business_date_obj = datetime.strptime(date, "%Y%m%d")
+    #     for file_name in dir:
+    #         date_str = file_name.split('_')[-1].split('.')[0]
 
-    #     # Count
-    #     self.count_files()
+    #         if self.is_valid_date(date_str):
+    #             file_date_obj = datetime.strptime(date_str, "%Y%m%d")
+    #             if file_date_obj < business_date_obj:
+    #                 older_files.append(file_name)
+    #     return older_files
 
-    # def count_files(self):
-    #     # Count log files
-    #     self.banksim_logs_files = sum(
-    #         len(glob.glob(os.path.join(self.dir_banksimlogs, subdir, "*.log")))
-    #         for subdir in ["crs", "pma", "tba"]
-    #     )
+    # def count_csv_rows(file_path: str) -> int:
+    #     with open(file_path, "r") as file:
+    #         data = csv.reader(file)
+    #         data_rows = sum(1 for _ in data) - 1
 
-    #     # Count input files
-    #     self.input_files_crs = len(
-    #         glob.glob(os.path.join(self.dir_input_crs, f"*{self.business_date}*.csv"))
-    #     )
-    #     self.input_files_pma = len(
-    #         glob.glob(os.path.join(self.dir_input_pma, f"*{self.business_date}*.csv"))
-    #     )
-    #     self.input_files_tba = len(
-    #         glob.glob(os.path.join(self.dir_input_tba, f"*{self.business_date}*.csv"))
-    #     )
+    #     return data_rows
 
-    #     # Count output files
-    #     self.output_files_crs = len(
-    #         glob.glob(os.path.join(self.dir_output_crs, "risk_dataset.xls"))
-    #     )
-    #     self.output_files_pma = len(
-    #         glob.glob(os.path.join(self.dir_output_pma, f"*{self.business_date}*.csv"))
-    #     )
-    #     self.output_files_tba = len(
-    #         glob.glob(os.path.join(self.dir_output_tba, f"*{self.business_date}*.csv"))
-    #     )
+    # def get_file_size(self, file_path: str) -> int:
+    #     return os.path.getsize(file_path)
 
-    # def print_counts(self):
-    #     print(f"# of BanksimLogs log files: {self.banksim_logs_files}")
-    #     print(f"# of Input files in CRS: {self.input_files_crs}")
-    #     print(f"# of Input files in PMA: {self.input_files_pma}")
-    #     print(f"# of Input files in TBA: {self.input_files_tba}")
-    #     print(f"# of Output files in CRS: {self.output_files_crs}")
-    #     print(f"# of Output files in PMA: {self.output_files_pma}")
-    #     print(f"# of Output files in TBA: {self.output_files_tba}")
+    # def extract_date_file_name(self, file_name: str):
+    #     if file_name[0] == '.':
+    #         file_name = file_name.split(".")[1]
+    #     date = file_name.split(".")[0].split("_")[-1]
+    #     return date
+
+    # def get_files_dates(self, file_paths: list) -> list:
+    #     dates = set()
+    #     for file in file_paths:
+    #         if os.path.isfile(file):
+    #             date_str = self.extract_date_file_name(file)
+    #             if self.is_valid_date(date_str):
+    #                 dates.add(date_str)
+    #     return dates
+
+    # def is_valid_date(self, date_str: str) -> bool:
+    #     try:
+    #         datetime.strptime(date_str, "%Y%m%d")
+    #         return True
+    #     except ValueError:
+    #         return False
+
+    # def find_earliest_date(self, date_strings: set) -> datetime:
+    #     dates = [datetime.strptime(date_str, "%Y%m%d") for date_str in date_strings]
+    #     return min(dates)
+
+    # def compare_date_with_string(date_obj: datetime, date_str: str) -> bool:
+    #     try:
+    #         date_from_string = datetime.strptime(date_str, "%Y%m%d")
+    #     except ValueError:
+    #         raise ValueError(f"Date string '{date_str}' is not in the correct format.")
+    #     return date_obj == date_from_string
+
+    # def change_files(self, files: set) -> None:
+    #     self.files = files

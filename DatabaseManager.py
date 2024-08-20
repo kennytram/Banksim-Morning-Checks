@@ -19,6 +19,20 @@ class DatabaseManager:
 
         self.engine = create_engine(conn_str)
 
+    def get_morning_check_table(self):
+        morning_query = f"SELECT * FROM dbo.MorningCheck"
+
+        df_morning = pd.read_sql(morning_query, self.engine)
+
+        return df_morning
+    
+    def get_alert_table(self):
+        alert_query = f"SELECT * FROM dbo.Metric"
+
+        df_metric = pd.read_sql(alert_query, self.engine)
+
+        return df_metric
+
     def get_trade_counts(self):
 
         tradequery = f"SELECT count(*) AS TBA_Trades FROM TradeBooking.Trades WHERE TradeDate='{self.business_date}'"
@@ -56,20 +70,3 @@ class DatabaseManager:
         }
 
         return data
-
-        if df_trade + df_tradeloans + df_traderepo == checker.banksim_logs_files:
-            print("TBA are equal")
-        else:
-            print("red alert")
-        if df_pma_loan_trades + df_pma_repo_trades == checker.input_files_pma:
-
-            print("PMA are equal")
-        else:
-            print(checker.input_files_pma)
-            print("red alert")
-        if df_tradeloans + df_traderepo == checker.input_files_crs:
-            print("CRS are equal")
-
-        else:
-            print(checker.input_files_crs)
-            print("red alert")

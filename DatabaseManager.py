@@ -27,9 +27,10 @@ class Alert(Base):
     metric_name = Column("metricname", String(255), nullable=False)
     alert_rule = Column("alertrule", String(255))
     scope = Column("scope", String(100))
-    
-    def __repr__(self): 
+
+    def __repr__(self):
         return f"<Metric(metricid='{self.metric_id}', metricname='{self.metric_name}', alert_rule='{self.alert_rule}', scope='{self.scope}')>"
+
 
 class MorningCheck(Base):
     __tablename__ = "MorningCheck"
@@ -40,8 +41,8 @@ class MorningCheck(Base):
     metric_value = Column("metricvalue", Integer)
     alert_triggered = Column("alerttriggered", Boolean, nullable=False)
 
-    def __repr__(self): 
-        return f"<MorningCheck(id='{self.id}', businessdate='{self.business_date}', app='{self.app}, metricid='{self.metric_id}', metricvalue='{self.metric_value}', alerttriggered='{self.alert_triggered}'>" 
+    def __repr__(self):
+        return f"<MorningCheck(id='{self.id}', businessdate='{self.business_date}', app='{self.app}, metricid='{self.metric_id}', metricvalue='{self.metric_value}', alerttriggered='{self.alert_triggered}'>"
 
 
 class DatabaseManager:
@@ -66,7 +67,7 @@ class DatabaseManager:
             print("MorningCheck table does not exist in db")
         except Exception as e:
             print(f"Error: {e}")
-    
+
     def create_morning_check_table(self):
         try:
             # morning_check_table = Table(
@@ -88,6 +89,7 @@ class DatabaseManager:
 
     def insert_morning_check(self, data):
         return
+
     def get_alert_table(self):
         # alert_query = f"SELECT * FROM dbo.Metric"
 
@@ -103,7 +105,7 @@ class DatabaseManager:
             print("Metric table does not exist in db")
         except Exception as e:
             print(f"Error: {e}")
-    
+
     def create_alert_table(self):
         try:
             # alert_table = Table(
@@ -118,18 +120,58 @@ class DatabaseManager:
             meta.create_all(engine, tables=[Alert.__table__])
         except Exception as e:
             print(f"Error: {e}")
-    
+
     def insert_default_alert_rules(self):
         try:
             metrics = [
-                Alert(metric_id=1,metric_name="Number of InputFiles", alert_rule="if nb != previousday", scope="pma,crs"),
-                Alert(metric_id=2,metric_name="Number of Logs", alert_rule="if nb != previousday", scope="pma,crs"),
-                Alert(metric_id=3,metric_name="Number of OutputFiles", alert_rule="if nb != previousday", scope="pma,crs"),
-                Alert(metric_id=4,metric_name="Trade Reconciliation", alert_rule="if reconciliation fail", scope="tba,pma,crs"),
-                Alert(metric_id=5,metric_name="Trade Chain Reconcilation", alert_rule="if reconciliation fail", scope="global"),
-                Alert(metric_id=6,metric_name="Error Check", alert_rule="if > 0", scope="tba,pma,crs"),
-                Alert(metric_id=7,metric_name="Reconciliation log - output files", alert_rule="if reconciliation fail", scope="tba,pma,crs"),
-                Alert(metric_id=8,metric_name="File Size Anomaly", alert_rule="if > 0", scope="pma,crs"),
+                Alert(
+                    metric_id=1,
+                    metric_name="Number of InputFiles",
+                    alert_rule="if nb != previousday",
+                    scope="pma,crs",
+                ),
+                Alert(
+                    metric_id=2,
+                    metric_name="Number of Logs",
+                    alert_rule="if nb != previousday",
+                    scope="pma,crs",
+                ),
+                Alert(
+                    metric_id=3,
+                    metric_name="Number of OutputFiles",
+                    alert_rule="if nb != previousday",
+                    scope="pma,crs",
+                ),
+                Alert(
+                    metric_id=4,
+                    metric_name="Trade Reconciliation",
+                    alert_rule="if reconciliation fail",
+                    scope="tba,pma,crs",
+                ),
+                Alert(
+                    metric_id=5,
+                    metric_name="Trade Chain Reconcilation",
+                    alert_rule="if reconciliation fail",
+                    scope="global",
+                ),
+                Alert(
+                    metric_id=6,
+                    metric_name="Error Check",
+                    alert_rule="if > 0",
+                    scope="tba,pma,crs",
+                ),
+                Alert(
+                    metric_id=7,
+                    metric_name="Reconciliation log - output files",
+                    alert_rule="if reconciliation fail",
+                    scope="tba,pma,crs",
+                ),
+                Alert(
+                    metric_id=8,
+                    metric_name="File Size Anomaly",
+                    alert_rule="if > 0",
+                    scope="pma,crs",
+                ),
             ]
             for metric in metrics:
                 session.add(metric)

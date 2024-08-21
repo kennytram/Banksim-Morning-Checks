@@ -37,9 +37,9 @@ class MorningCheck(Base):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     business_date = Column("businessdate", Date, nullable=False)
     app = Column("app", String(100), nullable=False)
-    metric_id = Column("metricid", Integer, ForeignKey("Metric.metricid"))
-    metric_value = Column("metricvalue", Integer)
-    alert_triggered = Column("alerttriggered", Boolean, nullable=False)
+    metric_id = Column("metricid", Integer, ForeignKey("Metric.metricid"), nullable=False)
+    metric_value = Column("metricvalue", String(100), default="N/A")
+    alert_triggered = Column("alerttriggered", Boolean, default=False, nullable=False)
 
     def __repr__(self):
         return f"<MorningCheck(id='{self.id}', businessdate='{self.business_date}', app='{self.app}, metricid='{self.metric_id}', metricvalue='{self.metric_value}', alerttriggered='{self.alert_triggered}'>"
@@ -51,6 +51,7 @@ class DatabaseManager:
 
         datetime_obj = datetime.strptime(business_date, "%Y%m%d")
         self.business_date = datetime_obj.strftime("%Y-%m-%d")
+        self.session = session
 
     def get_morning_check_table(self):
         # morning_query = f"SELECT * FROM dbo.MorningCheck"
@@ -88,7 +89,27 @@ class DatabaseManager:
             print(f"Error: {e}")
 
     def insert_morning_check(self, data):
-        return
+        # id = Column("id", Integer, primary_key=True, autoincrement=True)
+        # business_date = Column("businessdate", Date, nullable=False)
+        # app = Column("app", String(100), nullable=False)
+        # metric_id = Column("metricid", Integer, ForeignKey("Metric.metricid"))
+        # metric_value = Column("metricvalue", Integer)
+        # alert_triggered = Column("alerttriggered", Boolean, nullable=False)
+        try:
+            for check in data:
+                session.add(
+                    MorningCheck(
+                        business_date=check.business_date,
+                        app=check.app,
+                        metric_id=check.metric_id,
+                        metric_value=check.metric_value if check.metric_value is not None else "N/A",
+                        alert_triggered=False or check.alert_triggered,
+                    )
+                )
+                session.commit()
+        except Exception as e:
+            self.session.rollback()
+            print(f"Error: {e}")
 
     def get_alert_table(self):
         # alert_query = f"SELECT * FROM dbo.Metric"
@@ -173,10 +194,10 @@ class DatabaseManager:
                     scope="pma,crs",
                 ),
             ]
-            for metric in metrics:
-                session.add(metric)
+            session.add_all(metrics)
             session.commit()
         except Exception as e:
+            session.rollback()
             print(f"Error: {e}")
         return
 

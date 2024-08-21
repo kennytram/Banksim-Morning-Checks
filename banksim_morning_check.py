@@ -1,5 +1,5 @@
 from Banksim import *
-
+from FileWriter import *
 import os
 import argparse
 from datetime import datetime
@@ -173,6 +173,7 @@ if __name__ == "__main__":
         print(
             "=================================================================================================="
         )
+        # banksim.db_manager.create_morning_check_table()
         print(banksim.db_manager.get_morning_check_table())
 
         print("\n")
@@ -199,4 +200,7 @@ if __name__ == "__main__":
         print(
             "=================================================================================================="
         )
-        banksim.alert()
+        banksim.alert_check()
+        print(banksim.db_manager.get_alert_table())
+
+        banksim.db_manager.session.close()

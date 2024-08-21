@@ -55,17 +55,22 @@ class DatabaseManager:
         self.business_date = datetime_obj.strftime("%Y-%m-%d")
         self.session = session
 
-    def get_morning_check_table(self):
+    def get_morning_check_table(self, date):
         # morning_query = f"SELECT * FROM dbo.MorningCheck"
 
         # df_morning = pd.read_sql(morning_query, self.engine)
 
         # return df_morning
+        datetime_obj = datetime.strptime(date, "%Y%m%d")
+        date = datetime_obj.strftime("%Y-%m-%d")
 
         try:
             morning_check_table = Table("MorningCheck", meta, autoload_with=engine)
-            morning_check_table.select()
-            return pd.read_sql_table(table_name="MorningCheck", con=engine)
+            query = select(MorningCheck).where(MorningCheck.business_date==date)
+            # return pd.read_sql_table(table_name="MorningCheck", con=engine)
+            with engine.connect() as conn:
+                for row in conn.execute(query):
+                    print(row)
         except NoSuchTableError:
             print("MorningCheck table does not exist in db")
         except Exception as e:
@@ -126,7 +131,6 @@ class DatabaseManager:
 
         try:
             alert_table = Table("Metric", meta, autoload_with=engine)
-            alert_table.select()
             return pd.read_sql_table(table_name="Metric", con=engine)
         except NoSuchTableError:
             print("Metric table does not exist in db")
@@ -244,3 +248,14 @@ class DatabaseManager:
         }
 
         return data
+
+    def save_xls_data(self, query):
+        try:
+            crs_dataset_table = Table("creditriskdb.Dataset", meta, autoload_with=engine)
+            data = session.execute(select(crs_dataset_table)).all()
+            df = pd.DataFrame(data)
+            filename = "risk_dataset.xls"
+            with pd.ExcelWriter(filename) as writer:
+                df.to_excel(writer, index=False)
+        except Exception as e:
+            print(f"Error: {e}")

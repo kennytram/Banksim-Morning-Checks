@@ -58,7 +58,7 @@ if __name__ == "__main__":
         # Gather Files and Count Number of Files
         print("File Metrics : Total Input, Ouput and Log files")
         print(
-            "==================================================================================="
+            "=================================================================================================="
         )
         banksim.tba.count_files()
         banksim.pma.count_files()

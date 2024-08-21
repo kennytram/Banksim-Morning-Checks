@@ -56,18 +56,12 @@ class DatabaseManager:
         self.session = session
 
     def get_morning_check_table(self, date):
-        # morning_query = f"SELECT * FROM dbo.MorningCheck"
-
-        # df_morning = pd.read_sql(morning_query, self.engine)
-
-        # return df_morning
         datetime_obj = datetime.strptime(date, "%Y%m%d")
         date = datetime_obj.strftime("%Y-%m-%d")
 
         try:
             morning_check_table = Table("MorningCheck", meta, autoload_with=engine)
             query = select(MorningCheck).where(MorningCheck.business_date==date)
-            # return pd.read_sql_table(table_name="MorningCheck", con=engine)
             with engine.connect() as conn:
                 for row in conn.execute(query):
                     print(row)
@@ -78,17 +72,6 @@ class DatabaseManager:
 
     def create_morning_check_table(self):
         try:
-            # morning_check_table = Table(
-            #     "MorningCheck",
-            #     meta,
-            #     Column("id", Integer, primary_key=True, autoincrement=True),
-            #     Column("businessdate", Date, nullable=False),
-            #     Column("app", String(100), nullable=False),
-            #     Column("metricid", Integer, ForeignKey("Metric.metricid")),
-            #     Column("metricvalue", Integer),
-            #     Column("alerttriggered", Boolean, nullable=False)
-            # )
-            # meta.create_all(engine)
             meta.create_all(engine, tables=[MorningCheck.__table__])
         except NoReferencedTableError:
             print("Alert table needs to be created first")
@@ -96,12 +79,6 @@ class DatabaseManager:
             print(f"Error: {e}")
 
     def insert_morning_check(self, data):
-        # id = Column("id", Integer, primary_key=True, autoincrement=True)
-        # business_date = Column("businessdate", Date, nullable=False)
-        # app = Column("app", String(100), nullable=False)
-        # metric_id = Column("metricid", Integer, ForeignKey("Metric.metricid"))
-        # metric_value = Column("metricvalue", Integer)
-        # alert_triggered = Column("alerttriggered", Boolean, nullable=False)
         try:
             for check in data:
                 session.add(
@@ -123,12 +100,6 @@ class DatabaseManager:
             print(f"Error: {e}")
 
     def get_alert_table(self):
-        # alert_query = f"SELECT * FROM dbo.Metric"
-
-        # df_metric = pd.read_sql(alert_query, self.engine)
-
-        # return df_metric
-
         try:
             alert_table = Table("Metric", meta, autoload_with=engine)
             return pd.read_sql_table(table_name="Metric", con=engine)
@@ -139,15 +110,6 @@ class DatabaseManager:
 
     def create_alert_table(self):
         try:
-            # alert_table = Table(
-            #         "Metric",
-            #         self.meta,
-            #         Column("metricid", Integer, primary_key=True, nullable=False),
-            #         Column("metricname", String(255), nullable=False),
-            #         Column("alertrule", String(255)),
-            #         Column("scope", String(100))
-            # )
-            # meta.create_all(engine)
             meta.create_all(engine, tables=[Alert.__table__])
         except Exception as e:
             print(f"Error: {e}")
@@ -248,14 +210,3 @@ class DatabaseManager:
         }
 
         return data
-
-    def save_xls_data(self, query):
-        try:
-            crs_dataset_table = Table("creditriskdb.Dataset", meta, autoload_with=engine)
-            data = session.execute(select(crs_dataset_table)).all()
-            df = pd.DataFrame(data)
-            filename = "risk_dataset.xls"
-            with pd.ExcelWriter(filename) as writer:
-                df.to_excel(writer, index=False)
-        except Exception as e:
-            print(f"Error: {e}")

@@ -7,4 +7,4 @@ class FileWriter:
         file_path = f"{dest_dir}/{file_name}"
         with open(file_path, "w") as file:
             for line in self.data:
-                file.write(line + '\n')
+                file.write(line + "\n")

@@ -61,7 +61,8 @@ class DatabaseManager:
 
         try:
             morning_check_table = Table("MorningCheck", meta, autoload_with=engine)
-            query = select(MorningCheck).where(MorningCheck.business_date==date)
+            query = select(MorningCheck).where(MorningCheck.business_date == date)
+            # return pd.read_sql_table(table_name="MorningCheck", con=engine)
             with engine.connect() as conn:
                 for row in conn.execute(query):
                     print(row)

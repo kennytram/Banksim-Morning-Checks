@@ -66,7 +66,7 @@ class DatabaseManager:
 
         try:
             morning_check_table = Table("MorningCheck", meta, autoload_with=engine)
-            query = select(MorningCheck).where(MorningCheck.business_date==date)
+            query = select(MorningCheck).where(MorningCheck.business_date == date)
             # return pd.read_sql_table(table_name="MorningCheck", con=engine)
             with engine.connect() as conn:
                 for row in conn.execute(query):
@@ -251,7 +251,9 @@ class DatabaseManager:
 
     def save_xls_data(self, query):
         try:
-            crs_dataset_table = Table("creditriskdb.Dataset", meta, autoload_with=engine)
+            crs_dataset_table = Table(
+                "creditriskdb.Dataset", meta, autoload_with=engine
+            )
             data = session.execute(select(crs_dataset_table)).all()
             df = pd.DataFrame(data)
             filename = "risk_dataset.xls"

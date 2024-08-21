@@ -37,7 +37,9 @@ class MorningCheck(Base):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     business_date = Column("businessdate", Date, nullable=False)
     app = Column("app", String(100), nullable=False)
-    metric_id = Column("metricid", Integer, ForeignKey("Metric.metricid"), nullable=False)
+    metric_id = Column(
+        "metricid", Integer, ForeignKey("Metric.metricid"), nullable=False
+    )
     metric_value = Column("metricvalue", String(100), default="N/A")
     alert_triggered = Column("alerttriggered", Boolean, default=False, nullable=False)
 
@@ -102,7 +104,11 @@ class DatabaseManager:
                         business_date=check.business_date,
                         app=check.app,
                         metric_id=check.metric_id,
-                        metric_value=check.metric_value if check.metric_value is not None else "N/A",
+                        metric_value=(
+                            check.metric_value
+                            if check.metric_value is not None
+                            else "N/A"
+                        ),
                         alert_triggered=False or check.alert_triggered,
                     )
                 )

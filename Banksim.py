@@ -110,7 +110,6 @@ class Banksim:
             for dir, count in self.__systems[system].count_data.items():
                 curr_count_data[system][dir] = count
 
-        
         self.__prev_date_systems["tba"].count_files()
         self.__prev_date_systems["pma"].count_files()
         self.__prev_date_systems["crs"].count_files()
@@ -141,7 +140,10 @@ class Banksim:
                 print(f"{system}'s Trade Reconciliation Alert")
                 alerts[system]["trade_reconciliation"] = "RED"
                 sys_tr_check.alert_triggered = True
-                diff = abs(self.__systems[system].trade_data["total"] - self.total_db_trade_counts[system])
+                diff = abs(
+                    self.__systems[system].trade_data["total"]
+                    - self.total_db_trade_counts[system]
+                )
                 sys_tr_check.metric_value = str(diff)
             sys_tr_check.app = system.lower()
             sys_tr_check.metric_id = 4
@@ -200,5 +202,5 @@ class Banksim:
                 sys_fsa_check.app = system.lower()
                 sys_fsa_check.metric_id = 8
                 data.append(sys_fsa_check)
-        
+
         self.db_manager.insert_morning_check(data)

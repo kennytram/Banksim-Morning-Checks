@@ -62,7 +62,7 @@ if __name__ == "__main__":
         print(data)
 
         banksim.alert_check()
-        
+
         banksim.db_manager.session.close()
         # # Gather Files and Count Number of Files
         # print("File Metrics : Total Input, Ouput and Log files")

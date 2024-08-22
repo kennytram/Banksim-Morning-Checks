@@ -134,7 +134,7 @@ class Banksim:
                 prev_count = prev_count_data[system].get(dir, 0)
 
                 if curr_count != prev_count:
-                    print(f"{system}'s {dir}: Number of files mismatched")
+                    # print(f"{system}'s {dir}: Number of files mismatched")
                     alerts[system][dir] = "AMBER"
                     sys_dir_check.metric_value = str(abs(curr_count - prev_count))
                     sys_dir_check.alert_triggered = 1
@@ -146,7 +146,7 @@ class Banksim:
             # 4 Trade Reconciliation
             sys_tr_check = MorningCheck(business_date=self.business_date)
             if self.trade_reconciliation_alert[system] != "GREEN":
-                print(f"{system}'s Trade Reconciliation Alert")
+                # print(f"{system}'s Trade Reconciliation Alert")
                 alerts[system]["trade_reconciliation"] = "RED"
                 sys_tr_check.alert_triggered = True
                 diff = abs(
@@ -161,7 +161,7 @@ class Banksim:
             # 5 Trade Chain Reconcilation
             sys_tcr_check = MorningCheck(business_date=self.business_date)
             if self.trade_chain_reconciliation_alert[system] != "GREEN":
-                print(f"{system}'s Trade Chain Reconciliation Alert")
+                # print(f"{system}'s Trade Chain Reconciliation Alert")
                 alerts[system]["trade_chain_reconciliation"] = "RED"
                 sys_tcr_check.alert_triggered = True
             sys_tcr_check.app = system.lower()
@@ -173,7 +173,7 @@ class Banksim:
             if self.__systems[system].error_data.get("ERROR") or self.__systems[
                 system
             ].error_data.get("CRITICAL"):
-                print(f"{system}'s Error Check Alert")
+                # print(f"{system}'s Error Check Alert")
                 alerts[system]["error"] = "RED"
                 sys_error_check.alert_triggered = True
                 errors_length = len(self.__systems[system].error_data.get("ERROR"))
@@ -188,7 +188,7 @@ class Banksim:
             # 7 Reconciliation Log - Output Files
             sys_rec_check = MorningCheck(business_date=self.business_date)
             if self.__systems[system].missing_file_data:
-                print(f"{system}'s Missing File(s) Alert")
+                # print(f"{system}'s Missing File(s) Alert")
                 alerts[system]["missing"] = "RED"
                 sys_rec_check.alert_triggered = True
                 sys_rec_check.metric_value = str(
@@ -202,8 +202,8 @@ class Banksim:
             if system != "tba":
                 sys_fsa_check = MorningCheck(business_date=self.business_date)
                 if self.__systems[system].file_anomalies:
-                    print(f"{system}'s File Size Anomalies Alert")
-                    alerts[system]["file_anomalies"] = "AMBER" if alerts[system]["file_anomalies"] != "RED" else "RED"
+                    # print(f"{system}'s File Size Anomalies Alert")
+                    alerts[system]["file_anomalies"] = "AMBER"
                     sys_fsa_check.alert_triggered = True
                     sys_fsa_check.metric_value = str(
                         len(self.__systems[system].file_anomalies)

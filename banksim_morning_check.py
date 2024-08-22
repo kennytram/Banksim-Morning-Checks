@@ -11,6 +11,7 @@ us_holidays = holidays.US()
 REPORT_DIR = "/home/teamsupport2/logs"
 TEAM_DIR = "/home/teamsupport2"
 
+
 # Brandon
 def holiday_check(business_date):
     if isinstance(business_date, str):
@@ -131,9 +132,9 @@ if __name__ == "__main__":
         # )
         # print(
         #     "pma's # of loads:",
-            # banksim.pma.file_checker.get_num_files(
-            #     banksim.pma.dirs["logs"], "load*.log"
-            # ),
+        # banksim.pma.file_checker.get_num_files(
+        #     banksim.pma.dirs["logs"], "load*.log"
+        # ),
         # )
         # print(
         #     "pma's # of eod_extracts:",

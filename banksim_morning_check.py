@@ -41,7 +41,7 @@ def get_prev_date(date_str: str) -> str:
 dotenv.load_dotenv()
 IS_DEVELOPMENT = os.getenv("IS_DEVELOPMENT")
 SYS_NECESSARY_FILES = {"crs": {}, "pma": {}, "tba": {}}
-base_dir = "./blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
+base_dir = "../blobmount" if IS_DEVELOPMENT else "/home/azureuser/blobmount"
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -56,9 +56,11 @@ if __name__ == "__main__":
 
         data = banksim.make_health_check_report()
         file_writer = FileWriter(data)
-        file_writer.write(f"morning_report_{args.business_date}.log")
-        file_writer.write(f"latest_morning_check_report.log")
+        file_writer.write(f"morning_report_{args.business_date}.log", REPORT_DIR)
+        file_writer.write(f"latest_morning_check_report.log", TEAM_DIR)
         print(data)
+
+        banksim.alert_check()
         
         banksim.db_manager.session.close()
         # # Gather Files and Count Number of Files

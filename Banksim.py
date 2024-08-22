@@ -145,7 +145,7 @@ class Banksim:
         for system in self.__systems:
             # 4 Trade Reconciliation
             sys_tr_check = MorningCheck(business_date=self.business_date)
-            if self.trade_reconciliation_alert.get(system, False):
+            if self.trade_reconciliation_alert[system] != "GREEN":
                 print(f"{system}'s Trade Reconciliation Alert")
                 alerts[system]["trade_reconciliation"] = "RED"
                 sys_tr_check.alert_triggered = True
@@ -160,7 +160,7 @@ class Banksim:
 
             # 5 Trade Chain Reconcilation
             sys_tcr_check = MorningCheck(business_date=self.business_date)
-            if self.trade_chain_reconciliation_alert.get(system, False):
+            if self.trade_chain_reconciliation_alert[system] != "GREEN":
                 print(f"{system}'s Trade Chain Reconciliation Alert")
                 alerts[system]["trade_chain_reconciliation"] = "RED"
                 sys_tcr_check.alert_triggered = True

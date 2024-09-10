@@ -43,7 +43,10 @@ class MorningCheck(Base):
     business_date = Column("businessdate", Date, nullable=False)
     app = Column("app", String(100), nullable=False)
     metric_id = Column(
-        "metricid", Integer, ForeignKey("team02.Metric.metricid"), nullable=False
+        "metricid",
+        Integer,
+        ForeignKey("team02.Metric.metricid"),
+        nullable=False,
         # "metricid", Integer, ForeignKey("Metric.metricid"), nullable=False
     )
     metric_value = Column("metricvalue", String(100), default="N/A")
@@ -205,18 +208,34 @@ class DatabaseManager:
 
     def get_duplicate_data(self):
         # TradeBooking Trade Queries
-        tradequery = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.Trades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
-        tradeloans = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.LoanTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
-        traderepo = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.RepoTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
+        tradequery = text(
+            "SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.Trades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2"
+        )
+        tradeloans = text(
+            "SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.LoanTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2"
+        )
+        traderepo = text(
+            "SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.RepoTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2"
+        )
 
         # PoseManagement Trades Queries
-        pma_trades_query = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.Trades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
-        pma_loan_trades_query = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.LoanTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
-        pma_repo_trades_query = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.RepoTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
+        pma_trades_query = text(
+            "SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.Trades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2"
+        )
+        pma_loan_trades_query = text(
+            "SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.LoanTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2"
+        )
+        pma_repo_trades_query = text(
+            "SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.RepoTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2"
+        )
 
         # creditriskdb BackOffice Queries
-        crs_loan_query = text(f"SELECT count(tradeid), tradeid, timestamp, clientid FROM creditriskdb.BackOffice_Loan WHERE timestamp = '{self.business_date}' GROUP BY tradeid, timestamp, clientid HAVING COUNT(tradeid) >= 2")
-        crs_repo_query = text(f"SELECT count(tradeid), tradeid, timestamp, clientid FROM creditriskdb.BackOffice_Repo WHERE timestamp = '{self.business_date}' GROUP BY tradeid, timestamp, clientid HAVING COUNT(tradeid) >= 2")
+        crs_loan_query = text(
+            f"SELECT count(tradeid), tradeid, timestamp, clientid FROM creditriskdb.BackOffice_Loan WHERE timestamp = '{self.business_date}' GROUP BY tradeid, timestamp, clientid HAVING COUNT(tradeid) >= 2"
+        )
+        crs_repo_query = text(
+            f"SELECT count(tradeid), tradeid, timestamp, clientid FROM creditriskdb.BackOffice_Repo WHERE timestamp = '{self.business_date}' GROUP BY tradeid, timestamp, clientid HAVING COUNT(tradeid) >= 2"
+        )
 
         trade_results = session.execute(tradequery).fetchall()
         tradeloans_results = session.execute(tradeloans).fetchall()

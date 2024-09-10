@@ -128,7 +128,7 @@ class ApplicationHealthCheck:
 
         self.missing_file_data.extend(list(missing_files))
         return missing_files
-    
+
     def find_files_no_newline(self) -> set:
         files_no_newlines = set()
 
@@ -136,7 +136,7 @@ class ApplicationHealthCheck:
             for file in files:
                 if self.file_checker.check_newline_at_end(file):
                     files_no_newlines.add(file)
-        
+
         return files_no_newlines
 
     def calculate_received(self) -> None:

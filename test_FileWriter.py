@@ -1,6 +1,7 @@
 import pytest
 from FileWriter import FileWriter
 
+
 @pytest.fixture
 def file_writer() -> FileWriter:
     return FileWriter("Test Data")
@@ -16,4 +17,3 @@ def test_write(file_writer: FileWriter, tmp_path) -> None:
     with open(temp_file, "r") as f:
         content = f.read()
     assert content == "Test Data", f"Unexpected file content: {content}"
-    

@@ -75,10 +75,10 @@ class FileChecker:
 
     def check_newline_at_end(self, file_path):
         try:
-            with open(file_path, 'rb') as file:
+            with open(file_path, "rb") as file:
                 file.seek(-1, os.SEEK_END)
                 last_char = file.read(2)
-                return last_char == b'\r\n'
+                return last_char == b"\r\n"
         except Exception as e:
             print(f"Error reading file {file_path}: {e}")
             return False

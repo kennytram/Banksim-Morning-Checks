@@ -15,9 +15,9 @@ my_email = EMAIL_FROM
 password = APP_EMAIL_PASSWORD
 
 message = EmailMessage()
- # SMTP Server and port no for GMAIL.com
-gmail_server= "smtp.gmail.com"
-gmail_port= 587
+# SMTP Server and port no for GMAIL.com
+gmail_server = "smtp.gmail.com"
+gmail_port = 587
 
 # Starting connection
 my_server = smtplib.SMTP(gmail_server, gmail_port)
@@ -27,6 +27,7 @@ my_server.starttls()
 
 # Login with your email and password
 my_server.login(my_email, password)
+
 
 # Brandon
 def holiday_check(business_date):
@@ -52,6 +53,7 @@ def get_prev_date(date_str: str) -> str:
     prev_date = temp.strftime("%Y%m%d")
     return prev_date
 
+
 dotenv.load_dotenv()
 base_dir = "/home/teamsupport2/blobmount"
 
@@ -76,27 +78,50 @@ if __name__ == "__main__":
     greet_msg = f'<p style="color:black;">Hello,</p><p style="color:black;">Please find below the Morning Checks report for the day {business_date}.</p>'
     data = banksim.make_health_check_report()
     html_email_data = banksim.make_email_data()
-    
+
     # Apply bold formatting to system headers
-    html_email_data = html_email_data.replace('Trade Booking System (TBA):', '<strong>Trade Booking System (TBA):</strong>')
-    html_email_data = html_email_data.replace('Position Management System (PMA):', '<strong>Position Management System (PMA):</strong>')
-    html_email_data = html_email_data.replace('Credit Risk System (CRS):', '<strong>Credit Risk System (CRS):</strong>')
-    
+    html_email_data = html_email_data.replace(
+        "Trade Booking System (TBA):", "<strong>Trade Booking System (TBA):</strong>"
+    )
+    html_email_data = html_email_data.replace(
+        "Position Management System (PMA):",
+        "<strong>Position Management System (PMA):</strong>",
+    )
+    html_email_data = html_email_data.replace(
+        "Credit Risk System (CRS):", "<strong>Credit Risk System (CRS):</strong>"
+    )
+
     # Replace 'GREEN', 'AMBER', 'RED' with appropriate HTML for coloring
-    html_email_data = html_email_data.replace('GREEN', '<span style="color:green;"><strong>GREEN</strong></span>')
-    html_email_data = html_email_data.replace('AMBER', '<span style="color:orange;"><strong>AMBER</strong></span>')
-    html_email_data = html_email_data.replace('RED', '<span style="color:red;"><strong>RED</strong></span>')
-    
+    html_email_data = html_email_data.replace(
+        "GREEN", '<span style="color:green;"><strong>GREEN</strong></span>'
+    )
+    html_email_data = html_email_data.replace(
+        "AMBER", '<span style="color:orange;"><strong>AMBER</strong></span>'
+    )
+    html_email_data = html_email_data.replace(
+        "RED", '<span style="color:red;"><strong>RED</strong></span>'
+    )
+
     # Add HTML line breaks for proper formatting
     html_email_data = html_email_data.replace("\n", "<br>")
 
     # Wrap the main content in a black-colored <div> to ensure all non-status text is black
-    combined_msg = greet_msg + f'<div style="color:black;">{html_email_data}</div>' + '<br>' + '<p style="color:black;">Regards,<br>TeamSupport2</p>'
+    combined_msg = (
+        greet_msg
+        + f'<div style="color:black;">{html_email_data}</div>'
+        + "<br>"
+        + '<p style="color:black;">Regards,<br>TeamSupport2</p>'
+    )
     # message.attach(MIMEText(text_content))
-    message.set_content(combined_msg, subtype='html')
-    message['Subject'] = f'Morning Checks Report for the day {business_date}'
-    message['From'] = my_email
-    message['To'] = my_email, "kennyv.tram@gmail.com", "artionkaraj@gmail.com", "brandon.wonsung.lee@gmail.com"
+    message.set_content(combined_msg, subtype="html")
+    message["Subject"] = f"Morning Checks Report for the day {business_date}"
+    message["From"] = my_email
+    message["To"] = (
+        my_email,
+        "kennyv.tram@gmail.com",
+        "artionkaraj@gmail.com",
+        "brandon.wonsung.lee@gmail.com",
+    )
     # my_server.sendmail(
     #     from_addr= my_email,
     #     to_addrs=my_email,

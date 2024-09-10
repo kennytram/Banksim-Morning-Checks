@@ -13,9 +13,12 @@ import dotenv
 # Create a .env and make a variable named DB_CONN_STR that contains the login info
 dotenv.load_dotenv()
 conn_str = os.getenv("DB_CONN_STR")
+mc_conn_str = os.getenv("MC_DB_CONN_STR")
 
 engine = create_engine(conn_str)
+mc_engine = create_engine(mc_conn_str)
 session = Session(engine)
+mc_session = Session(mc_engine)
 meta = MetaData()
 
 Base = declarative_base()
@@ -23,6 +26,7 @@ Base = declarative_base()
 
 class Alert(Base):
     __tablename__ = "Metric"
+    __table_args__ = {"schema": "team02"}
     metric_id = Column("metricid", Integer, primary_key=True, nullable=False)
     metric_name = Column("metricname", String(255), nullable=False)
     alert_rule = Column("alertrule", String(255))
@@ -34,17 +38,21 @@ class Alert(Base):
 
 class MorningCheck(Base):
     __tablename__ = "MorningCheck"
+    __table_args__ = {"schema": "team02"}
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     business_date = Column("businessdate", Date, nullable=False)
     app = Column("app", String(100), nullable=False)
     metric_id = Column(
-        "metricid", Integer, ForeignKey("Metric.metricid"), nullable=False
+        "metricid", Integer, ForeignKey("team02.Metric.metricid"), nullable=False
+        # "metricid", Integer, ForeignKey("Metric.metricid"), nullable=False
     )
     metric_value = Column("metricvalue", String(100), default="N/A")
     alert_triggered = Column("alerttriggered", Boolean, default=False, nullable=False)
+    date_added = Column("dateadded", Date, nullable=False)
+    date_modified = Column("datemodified", Date, nullable=False)
 
     def __repr__(self):
-        return f"<MorningCheck(id='{self.id}', businessdate='{self.business_date}', app='{self.app}, metricid='{self.metric_id}', metricvalue='{self.metric_value}', alerttriggered='{self.alert_triggered}'>"
+        return f"<MorningCheck(id='{self.id}', businessdate='{self.business_date}', app='{self.app}, metricid='{self.metric_id}', metricvalue='{self.metric_value}', alerttriggered='{self.alert_triggered}', 'dateadded='{self.date_added}', datemodified='{self.date_modified}'>"
 
 
 class DatabaseManager:
@@ -54,16 +62,17 @@ class DatabaseManager:
         datetime_obj = datetime.strptime(business_date, "%Y%m%d")
         self.business_date = datetime_obj.strftime("%Y-%m-%d")
         self.session = session
+        self.mc_session = mc_session
 
     def get_morning_check_table(self, date):
         datetime_obj = datetime.strptime(date, "%Y%m%d")
         date = datetime_obj.strftime("%Y-%m-%d")
 
         try:
-            morning_check_table = Table("MorningCheck", meta, autoload_with=engine)
+            morning_check_table = Table("MorningCheck", meta, autoload_with=mc_engine)
             query = select(MorningCheck).where(MorningCheck.business_date == date)
             # return pd.read_sql_table(table_name="MorningCheck", con=engine)
-            with engine.connect() as conn:
+            with mc_engine.connect() as conn:
                 for row in conn.execute(query):
                     print(row)
         except NoSuchTableError:
@@ -73,7 +82,7 @@ class DatabaseManager:
 
     def create_morning_check_table(self):
         try:
-            meta.create_all(engine, tables=[MorningCheck.__table__])
+            meta.create_all(mc_engine, tables=[MorningCheck.__table__])
         except NoReferencedTableError:
             print("Alert table needs to be created first")
         except Exception as e:
@@ -82,28 +91,48 @@ class DatabaseManager:
     def insert_morning_check(self, data):
         try:
             for check in data:
-                session.add(
-                    MorningCheck(
+                existing_record = (
+                    mc_session.query(MorningCheck)
+                    .filter_by(
                         business_date=check.business_date,
                         app=check.app,
                         metric_id=check.metric_id,
-                        metric_value=(
-                            check.metric_value
-                            if check.metric_value is not None
-                            else "N/A"
-                        ),
-                        alert_triggered=False or check.alert_triggered,
                     )
+                    .first()
                 )
-                session.commit()
+
+                if existing_record:
+                    existing_record.metric_value = (
+                        check.metric_value if check.metric_value is not None else "N/A"
+                    )
+                    existing_record.alert_triggered = check.alert_triggered or False
+                    existing_record.date_modified = datetime.now()
+
+                else:
+                    mc_session.add(
+                        MorningCheck(
+                            business_date=check.business_date,
+                            app=check.app,
+                            metric_id=check.metric_id,
+                            metric_value=(
+                                check.metric_value
+                                if check.metric_value is not None
+                                else "N/A"
+                            ),
+                            alert_triggered=(check.alert_triggered or False),
+                            date_added=datetime.now(),
+                            date_modified=datetime.now(),
+                        )
+                    )
+                mc_session.commit()
         except Exception as e:
-            self.session.rollback()
+            self.mc_session.rollback()
             print(f"Error: {e}")
 
     def get_alert_table(self):
         try:
-            alert_table = Table("Metric", meta, autoload_with=engine)
-            return pd.read_sql_table(table_name="Metric", con=engine)
+            alert_table = Table("Metric", meta, autoload_with=mc_engine)
+            return pd.read_sql_table(table_name="Metric", con=mc_engine)
         except NoSuchTableError:
             print("Metric table does not exist in db")
         except Exception as e:
@@ -111,7 +140,7 @@ class DatabaseManager:
 
     def create_alert_table(self):
         try:
-            meta.create_all(engine, tables=[Alert.__table__])
+            meta.create_all(mc_engine, tables=[Alert.__table__])
         except Exception as e:
             print(f"Error: {e}")
 
@@ -167,15 +196,65 @@ class DatabaseManager:
                     scope="pma,crs",
                 ),
             ]
-            session.add_all(metrics)
-            session.commit()
+            mc_session.add_all(metrics)
+            mc_session.commit()
         except Exception as e:
-            session.rollback()
+            mc_session.rollback()
             print(f"Error: {e}")
         return
 
-    def get_trade_counts(self):
+    def get_duplicate_data(self):
+        # TradeBooking Trade Queries
+        tradequery = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.Trades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
+        tradeloans = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.LoanTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
+        traderepo = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM TradeBooking.RepoTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
 
+        # PoseManagement Trades Queries
+        pma_trades_query = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.Trades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
+        pma_loan_trades_query = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.LoanTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
+        pma_repo_trades_query = text("SELECT count(clienttradeid), clienttradeid, tradedate, clientcode FROM PoseManagement.RepoTrades GROUP BY clienttradeid, tradedate, clientcode HAVING COUNT(clienttradeid) >= 2")
+
+        # creditriskdb BackOffice Queries
+        crs_loan_query = text(f"SELECT count(tradeid), tradeid, timestamp, clientid FROM creditriskdb.BackOffice_Loan WHERE timestamp = '{self.business_date}' GROUP BY tradeid, timestamp, clientid HAVING COUNT(tradeid) >= 2")
+        crs_repo_query = text(f"SELECT count(tradeid), tradeid, timestamp, clientid FROM creditriskdb.BackOffice_Repo WHERE timestamp = '{self.business_date}' GROUP BY tradeid, timestamp, clientid HAVING COUNT(tradeid) >= 2")
+
+        trade_results = session.execute(tradequery).fetchall()
+        tradeloans_results = session.execute(tradeloans).fetchall()
+        traderepo_results = session.execute(traderepo).fetchall()
+
+        pma_trade_results = session.execute(pma_trades_query).fetchall()
+        pma_tradeloans_results = session.execute(pma_loan_trades_query).fetchall()
+        pma_traderepo_results = session.execute(pma_repo_trades_query).fetchall()
+
+        crs_tradeloans_results = session.execute(crs_loan_query).fetchall()
+        crs_traderepo_results = session.execute(crs_repo_query).fetchall()
+
+        trade_list = [str(row.clienttradeid) for row in trade_results]
+        tradeloans_list = [str(row.clienttradeid) for row in tradeloans_results]
+        traderepo_list = [str(row.clienttradeid) for row in traderepo_results]
+
+        pma_trade_list = [str(row.clienttradeid) for row in pma_trade_results]
+        pma_tradeloans_list = [str(row.clienttradeid) for row in pma_tradeloans_results]
+        pma_traderepo_list = [str(row.clienttradeid) for row in pma_traderepo_results]
+
+        crs_tradeloans_list = [str(row.tradeid) for row in crs_tradeloans_results]
+        crs_traderepo_list = [str(row.tradeid) for row in crs_traderepo_results]
+
+        data = {
+            "tba_trades": trade_list,
+            "tba_loantrades": tradeloans_list,
+            "tba_repotrades": traderepo_list,
+            "pma_trades": pma_trade_list,
+            "pma_loantrades": pma_tradeloans_list,
+            "pma_repotrades": pma_traderepo_list,
+            "crs_loantrades": crs_tradeloans_list,
+            "crs_repotrades": crs_traderepo_list,
+        }
+
+        return data
+
+    def get_trade_counts(self):
+        # TradeBooking Trade Queries
         tradequery = f"SELECT count(*) AS TBA_Trades FROM TradeBooking.Trades WHERE TradeDate='{self.business_date}'"
         tradeloans = f"SELECT count(*) AS TBA_LoanTrades FROM TradeBooking.LoanTrades WHERE TradeDate='{self.business_date}'"
         traderepo = f"SELECT count(*) AS TBA_RepoTrades FROM TradeBooking.RepoTrades WHERE TradeDate='{self.business_date}'"
@@ -211,3 +290,8 @@ class DatabaseManager:
         }
 
         return data
+
+    def get_position_counts(self, date) -> None:
+        tba_positions_query = f"SELECT count(*) AS TBA_Positions FROM TradeBooking.Positions WHERE BusinessDate='{date}'"
+        df_tba_positions = pd.read_sql(tba_positions_query, engine).iloc[0, 0]
+        return df_tba_positions

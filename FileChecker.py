@@ -56,7 +56,6 @@ class FileChecker:
             if os.path.isfile(file_path):
                 with open(file_path, "r") as file:
                     total_lines += sum(1 for _ in file) - 1
-
         return total_lines
 
     def count_csv_rows_matching_files_matching_columns(
@@ -73,3 +72,13 @@ class FileChecker:
                         if row and row[column_idx] == column_pattern:
                             total_lines += 1
         return total_lines
+
+    def check_newline_at_end(self, file_path):
+        try:
+            with open(file_path, 'rb') as file:
+                file.seek(-1, os.SEEK_END)
+                last_char = file.read(2)
+                return last_char == b'\r\n'
+        except Exception as e:
+            print(f"Error reading file {file_path}: {e}")
+            return False

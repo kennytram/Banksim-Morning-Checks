@@ -96,6 +96,15 @@ class ApplicationHealthCheck:
         self.error_data["CRITICAL"] = self.file_checker.find_occurrences(
             "CRITICAL", self.files["logs"]
         )
+        self.error_data["WARN"] = self.file_checker.find_occurrences(
+            "WARN", self.files["logs"]
+        )
+        self.error_data["EMERGENCY"] = self.file_checker.find_occurrences(
+            "EMERGENCY", self.files["logs"]
+        )
+        self.error_data["FATAL"] = self.file_checker.find_occurrences(
+            "FATAL", self.files["logs"]
+        )
 
     def find_missing_files(self) -> set:
         missing_files = set()
@@ -104,7 +113,7 @@ class ApplicationHealthCheck:
             for pattern in file_patterns:
                 full_pattern = os.path.join(self.dirs[category], pattern)
                 matching_files = glob.glob(full_pattern)
-                if not all(file in self.files[category] for file in matching_files):
+                if not any(file in self.files[category] for file in matching_files):
                     missing_files.add(full_pattern)
 
         generated_files = self.file_checker.find_phrases(
@@ -119,6 +128,16 @@ class ApplicationHealthCheck:
 
         self.missing_file_data.extend(list(missing_files))
         return missing_files
+    
+    def find_files_no_newline(self) -> set:
+        files_no_newlines = set()
+
+        for dir, files in self.files.items():
+            for file in files:
+                if self.file_checker.check_newline_at_end(file):
+                    files_no_newlines.add(file)
+        
+        return files_no_newlines
 
     def calculate_received(self) -> None:
         return
@@ -130,7 +149,8 @@ class ApplicationHealthCheck:
 
         def normalize_filename(file_name, business_date):
             base_name = file_name.replace(business_date, "")
-            normalized_name = re.sub(r"\d+", "", base_name)
+            # Remove all digits and underlines
+            normalized_name = re.sub(r"[\d_+]", "", base_name)
             return normalized_name
 
         def find_matching_files(
@@ -143,19 +163,19 @@ class ApplicationHealthCheck:
                 normalize_filename(file, prev_business_date): file
                 for file in prev_files
             }
-
             common_normalized = set(current_normalized.keys()) & set(
                 prev_normalized.keys()
             )
 
             matching_files = [
-                (current_normalized[name], prev_normalized[name])
+                (prev_normalized[name], current_normalized[name])
                 for name in common_normalized
             ]
             return matching_files
 
         file_anomalies = []
 
+        # Input/Output Computation
         for dir_category in ["input", "output"]:
             for file_pattern in self.file_categories_patterns[dir_category]:
                 if self.business_date not in file_pattern:
@@ -164,18 +184,28 @@ class ApplicationHealthCheck:
                     self.business_date, self.prev_business_date
                 )
                 full_path_prev = os.path.join(self.dirs[dir_category], prev_file)
-                full_path_curr = os.path.join(self.dirs[dir_category], file_pattern)
-                try:
-                    prev_file_size = os.path.getsize(full_path_prev)
-                    curr_file_size = os.path.getsize(full_path_curr)
-                except FileNotFoundError:
-                    return []
-                if (
-                    curr_file_size > prev_file_size * 1.2
-                    or prev_file_size * 0.8 > curr_file_size
-                ):
-                    file_anomalies.append((full_path_prev, full_path_curr))
+                if os.path.isfile(full_path_prev):
+                    full_path_curr = os.path.join(self.dirs[dir_category], file_pattern)
+                    if os.path.isfile(full_path_curr):
+                        try:
+                            prev_file_size = os.path.getsize(full_path_prev)
+                            curr_file_size = os.path.getsize(full_path_curr)
+                        except FileNotFoundError:
+                            return []
+                        if (
+                            curr_file_size > prev_file_size * 1.2
+                            or prev_file_size * 0.8 > curr_file_size
+                        ):
+                            file_anomalies.append(
+                                (
+                                    full_path_prev,
+                                    full_path_curr,
+                                    prev_file_size,
+                                    curr_file_size,
+                                )
+                            )
 
+        # Logs Computation
         prev_logs_dir = self.dirs["logs"].replace(
             self.business_date, self.prev_business_date
         )
@@ -186,38 +216,55 @@ class ApplicationHealthCheck:
             ]
         except FileNotFoundError:
             return file_anomalies
-        list_curr_dir_files = sorted(self.files["logs"])
 
-        matching_files = None
+        list_curr_dir_files = sorted(self.files["logs"])
+        list_prev_dir_files = sorted(prev_logs_dir_files)
+
+        matching_log_files = None
         if len(prev_logs_dir_files) != len(list_curr_dir_files):
-            matching_files = find_matching_files[
+            matching_log_files = find_matching_files(
                 list_curr_dir_files,
                 prev_logs_dir_files,
                 self.business_date,
                 self.prev_business_date,
-            ]
-        if matching_files:
-            min_dir_files = (
-                prev_logs_dir_files
-                if len(prev_logs_dir_files) < len(self.files["logs"])
-                else list_curr_dir_files
             )
-            for idx in range(len(matching_files)):
+        if matching_log_files:
+            min_dir_files = None
+            prev_files = None
+            curr_files = None
+            if len(prev_logs_dir_files) < len(self.files["logs"]):
+                min_dir_files = sorted(prev_logs_dir_files)
+                prev_files = min_dir_files
+                curr_files = [curr_file for prev_file, curr_file in matching_log_files]
+                curr_files.sort()
+            else:
+                min_dir_files = sorted(list_curr_dir_files)
+                prev_files = [prev_file for prev_file, curr_file in matching_log_files]
+                curr_files = min_dir_files
+                prev_files.sort()
+            for idx in range(len(matching_log_files)):
                 try:
-                    prev_file_size = os.path.getsize(min_dir_files[idx])
-                    curr_file_size = os.path.getsize(matching_files[idx])
+                    prev_file_size = os.path.getsize(prev_files[idx])
+                    curr_file_size = os.path.getsize(curr_files[idx])
                 except FileNotFoundError:
                     return file_anomalies
                 if (
                     curr_file_size > prev_file_size * 1.2
                     or prev_file_size * 0.8 > curr_file_size
                 ):
-                    file_anomalies.append((min_dir_files[idx], matching_files[idx]))
+                    file_anomalies.append(
+                        (
+                            prev_files[idx],
+                            curr_files[idx],
+                            prev_file_size,
+                            curr_file_size,
+                        )
+                    )
 
         else:
             for idx in range(len(list_curr_dir_files)):
                 try:
-                    prev_file_size = os.path.getsize(prev_logs_dir_files[idx])
+                    prev_file_size = os.path.getsize(list_prev_dir_files[idx])
                     curr_file_size = os.path.getsize(list_curr_dir_files[idx])
                 except FileNotFoundError:
                     return file_anomalies
@@ -226,9 +273,13 @@ class ApplicationHealthCheck:
                     or prev_file_size * 0.8 > curr_file_size
                 ):
                     file_anomalies.append(
-                        (prev_logs_dir_files[idx], list_curr_dir_files[idx])
+                        (
+                            list_prev_dir_files[idx],
+                            list_curr_dir_files[idx],
+                            prev_file_size,
+                            curr_file_size,
+                        )
                     )
-
         self.file_anomalies.extend(file_anomalies)
         return file_anomalies
 
@@ -245,11 +296,16 @@ class TBAHealthCheck(ApplicationHealthCheck):
                 f"eod_extract_loan_trades_*.log",
                 f"eod_extract_repo_trades_*.log",
                 f"monitor_and_load_client_trades_*.log",
+                f"load_sod_positions_*.log",
+                f"extract_eod_trades_*.log",
             ],
-            "input": [],
+            "input": [
+                f"positions_{self.business_date}.csv",
+            ],
             "output": [
                 f"eod_loan_trades_{self.business_date}.csv",
                 f"eod_repo_trades_{self.business_date}.csv",
+                f"eod_trades_{self.business_date}.csv",
             ],
         }
 
@@ -264,7 +320,10 @@ class TBAHealthCheck(ApplicationHealthCheck):
         self.trade_data = dict()
         self.calculate_received()
 
-    def calculate_received(self):
+        self.position_data = 0
+        self.calculate_positions()
+
+    def calculate_received(self) -> None:
         for key, pattern in self.data_patterns.items():
             count_no_header = self.file_checker.count_csv_rows_matching_files(pattern)
             self.trade_data[key] = count_no_header
@@ -272,6 +331,19 @@ class TBAHealthCheck(ApplicationHealthCheck):
             self.trade_data["loan"]
             + self.trade_data["repo"]
             + self.trade_data["general"]
+        )
+
+    def calculate_positions(self) -> None:
+        first_column_idx = 0
+        date_obj = datetime.strptime(self.prev_business_date, "%Y%m%d")
+        formatted_date = date_obj.strftime("%Y-%m-%d")
+
+        input_dir = self.dirs["input"]
+        positions_file_pattern = f"{input_dir}/positions_{self.business_date}.csv"
+        self.position_data = (
+            self.file_checker.count_csv_rows_matching_files_matching_columns(
+                positions_file_pattern, formatted_date, first_column_idx
+            )
         )
 
 
@@ -289,6 +361,9 @@ class PMAHealthCheck(ApplicationHealthCheck):
                 f"load_eod_trades_*.log",
                 f"load_market_data_*.log",
                 f"load_referential_data_*.log",
+                f"position_computation_*.log",
+                f"extract_client_position_*.log",
+                f"eod_extract_positions_*.log",
             ],
             "input": [
                 f"Client_PTF_{self.business_date}.csv",
@@ -296,12 +371,15 @@ class PMAHealthCheck(ApplicationHealthCheck):
                 f"FX_{self.business_date}.csv",
                 f"eod_loan_trades_{self.business_date}.csv",
                 f"eod_repo_trades_{self.business_date}.csv",
+                f"eod_trades_{self.business_date}.csv",
                 f"stock_data_{self.business_date}.csv",
             ],
             "output": [
                 f"backoffice_loans_{self.business_date}.csv",
                 f"backoffice_repo_{self.business_date}.csv",
                 f"collat_data_{self.business_date}.csv",
+                f"extract_client_position_{self.business_date}.csv",
+                f"positions_{self.business_date}.csv",
             ],
         }
 
@@ -317,7 +395,7 @@ class PMAHealthCheck(ApplicationHealthCheck):
         self.trade_data = dict()
         self.calculate_received()
 
-    def calculate_received(self):
+    def calculate_received(self) -> None:
         for key, pattern in self.data_patterns.items():
             count_no_header = self.file_checker.count_csv_rows_matching_files(pattern)
             self.trade_data[key] = count_no_header
@@ -351,8 +429,8 @@ class CRSHealthCheck(ApplicationHealthCheck):
                 f"MasterContractProductData_{self.business_date}.csv",
                 f"collat_data_{self.business_date}.csv",
                 f"backoffice_repo_{self.business_date}.csv",
-                f"backoffice_loan_{self.business_date}.csv",
-                f"master_contract_{self.business_date}.csv"
+                f"backoffice_loans_{self.business_date}.csv",
+                f"master_contract_{self.business_date}.csv",
                 f"credit_limit_data_{self.business_date}.csv",
                 f"stock_data_{self.business_date}.csv",
             ],
@@ -360,6 +438,7 @@ class CRSHealthCheck(ApplicationHealthCheck):
         }
 
         self.add_file_pattern("output", "*.xls")
+        self.add_file_pattern("output", "*.xlsx")
         self.set_dirs()
         self.gather_files()
 
@@ -371,7 +450,7 @@ class CRSHealthCheck(ApplicationHealthCheck):
         self.trade_data = dict()
         self.calculate_received()
 
-    def calculate_received(self):
+    def calculate_received(self) -> None:
         last_column_idx = -1
         date_obj = datetime.strptime(self.business_date, "%Y%m%d")
         formatted_date = date_obj.strftime("%Y-%m-%d")
